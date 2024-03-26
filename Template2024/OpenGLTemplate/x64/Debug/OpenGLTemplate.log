@@ -1,0 +1,4 @@
+﻿  CatmullRom.cpp
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(421,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(422,54): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  OpenGLTemplate.vcxproj -> C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.exe
