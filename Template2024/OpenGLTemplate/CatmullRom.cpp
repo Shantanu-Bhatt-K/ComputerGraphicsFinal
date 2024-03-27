@@ -408,6 +408,190 @@ void CCatmullRom::CreateTrack()
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
 	// Generate a VAO called m_vaoTrack and a VBO to get the offset curve points and indices on the graphics card
 
+
+
+
+	//Right offset cureve
+
+	glGenVertexArrays(1, &m_vaoRightOffsetCurve);
+	glBindVertexArray(m_vaoRightOffsetCurve);
+	m_vboRightOffsetLine.Create();
+	m_vboRightOffsetLine.Bind();
+	for (int i = 0; i < m_rightOffsetPoints.size(); i++)
+	{
+		glm::vec3 p0, p1, p2, p3, p4, p5, p6, p7;
+		glm::vec2 t0, t1, t2, t3, t4, t5, t6, t7;
+		glm::vec3 n01, n12, n23, n30, n45, n56, n67, n74;
+
+		glm::vec3 tan0, norm0, binorm0;
+		glm::vec3 tan1, norm1, binorm1;
+		tan0 = m_centrelineTangentVectors[i];
+		tan1 = m_centrelineTangentVectors[(i + 1) % m_leftOffsetPoints.size()];
+		norm0 = glm::cross(m_centrelineTangentVectors[i], m_centrelineUpVectors[i]);
+		norm1 = glm::cross(m_centrelineTangentVectors[(i + 1) % m_leftOffsetPoints.size()], m_centrelineUpVectors[(i + 1) % m_leftOffsetPoints.size()]);
+		binorm0 = glm::cross(norm0, tan0);
+		binorm1 = glm::cross(norm1, tan1);
+		tan0 = glm::normalize(tan0);
+		tan1 = glm::normalize(tan1);
+		norm0 = glm::normalize(norm0);
+		norm1 = glm::normalize(norm1);
+		binorm0 = glm::normalize(binorm0);
+		binorm1 = glm::normalize(binorm1);
+
+		p0 = m_rightOffsetPoints[i] + (norm0 * 2.f) + (binorm0 * 2.f);
+		p1 = m_rightOffsetPoints[i] - (norm0 * 2.f) + (binorm0 * 2.f);
+		p2 = m_rightOffsetPoints[i] - (norm0 * 2.f) - (binorm0 * 2.f);
+		p3 = m_rightOffsetPoints[i] + (norm0 * 2.f) - (binorm0 * 2.f);
+
+		p4 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) + (binorm1 * 2.f);
+		p5 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) + (binorm1 * 2.f);
+		p6 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) - (binorm1 * 2.f);
+		p7 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) - (binorm1 * 2.f);
+
+		n01 = binorm0;
+		n12 = -norm0;
+		n23 = -binorm0;
+		n30 = norm0;
+
+		n45 = binorm1;
+		n56 = -norm1;
+		n67 = -binorm1;
+		n74 = norm1;
+
+		t0 = glm::vec2(0.f, i * tiling / m_rightOffsetPoints.size());
+		t1 = glm::vec2(0.33f, i * tiling / m_rightOffsetPoints.size());
+		t2 = glm::vec2(0.66f, i * tiling / m_rightOffsetPoints.size());
+		t3 = glm::vec2(1.f, i * tiling / m_rightOffsetPoints.size());
+
+		t4 = glm::vec2(0.f, (i + 1) * tiling / m_rightOffsetPoints.size());
+		t5 = glm::vec2(0.33f, (i + 1) * tiling / m_rightOffsetPoints.size());
+		t6 = glm::vec2(0.66f, (i + 1) * tiling / m_rightOffsetPoints.size());
+		t7 = glm::vec2(1.f, (i + 1) * tiling / m_rightOffsetPoints.size());
+
+
+		//upload to vbo;
+		CVertex cv0, cv1, cv2, cv3;
+		//rectangle 0145
+		cv0.position = p0;
+		cv0.texture = t0;
+		cv0.normal = n01;
+
+		cv1.position = p1;
+		cv1.texture = t1;
+		cv1.normal = n01;
+
+		cv2.position = p4;
+		cv2.texture = t4;
+		cv2.normal = n45;
+
+		cv3.position = p5;
+		cv3.texture = t5;
+		cv3.normal = n45;
+
+		m_vboRightOffsetLine.AddVertexData(&cv0, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv3, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+		m_vertexRight += 6;
+		//rectangle1256
+
+		cv0.position = p1;
+		cv0.texture = t1;
+		cv0.normal = n12;
+
+		cv1.position = p2;
+		cv1.texture = t2;
+		cv1.normal = n12;
+
+		cv2.position = p5;
+		cv2.texture = t5;
+		cv2.normal = n56;
+
+		cv3.position = p6;
+		cv3.texture = t6;
+		cv3.normal = n56;
+
+		m_vboRightOffsetLine.AddVertexData(&cv0, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv3, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+		m_vertexRight += 6;
+		//rectangle2367
+
+		cv0.position = p2;
+		cv0.texture = t2;
+		cv0.normal = n23;
+
+		cv1.position = p3;
+		cv1.texture = t3;
+		cv1.normal = n23;
+
+		cv2.position = p6;
+		cv2.texture = t6;
+		cv2.normal = n67;
+
+		cv3.position = p7;
+		cv3.texture = t7;
+		cv3.normal = n67;
+
+		m_vboRightOffsetLine.AddVertexData(&cv0, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv3, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+		m_vertexRight += 6;
+		//rectangle3174
+
+		cv0.position = p3;
+		cv0.texture = t3;
+		cv0.normal = n30;
+
+		cv1.position = p0;
+		cv1.texture = t0;
+		cv1.normal = n30;
+
+		cv2.position = p7;
+		cv2.texture = t7;
+		cv2.normal = n74;
+
+		cv3.position = p4;
+		cv3.texture = t4;
+		cv3.normal = n74;
+
+		m_vboRightOffsetLine.AddVertexData(&cv0, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+
+		m_vboRightOffsetLine.AddVertexData(&cv2, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv3, sizeof(CVertex));
+		m_vboRightOffsetLine.AddVertexData(&cv1, sizeof(CVertex));
+		m_vertexRight += 6;
+	}
+	for (unsigned int i = 0; i < m_vertexLeft; i++)
+	{
+		m_vboRightOffsetLine.AddIndexData(&i, sizeof(unsigned int));
+	}
+	m_vboRightOffsetLine.UploadDataToGPU(GL_STATIC_DRAW);
+
+	stride = 2 * sizeof(glm::vec3) + sizeof(glm::vec2);
+
+	// Vertex positions
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, 0);
+	// Texture coordinates
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)sizeof(glm::vec3));
+	// Normal vectors
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
 }
 
 
@@ -434,6 +618,8 @@ void CCatmullRom::RenderTrack()
 {
 	glBindVertexArray(m_vaoLeftOffsetCurve);
 	glDrawArrays(GL_TRIANGLES,0,m_vertexLeft);
+	glBindVertexArray(m_vaoRightOffsetCurve);
+	glDrawArrays(GL_TRIANGLES, 0, m_vertexRight);
 }
 
 int CCatmullRom::CurrentLap(float d)
