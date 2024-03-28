@@ -24,6 +24,8 @@ public:
 	void CreateTrack();
 	void RenderTrack();
 	float tiling = 100;
+
+	float thickness = 1.f;
 	int CurrentLap(float d); // Return the currvent lap (starting from 0) based on distance along the control curve.
 
 	bool Sample(float d, glm::vec3 &p, glm::vec3 &up = _dummy_vector,glm::vec3 &forward=_dummy_vector); // Return a point on the centreline based on a certain distance along the control curve.

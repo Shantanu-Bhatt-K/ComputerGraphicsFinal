@@ -10,7 +10,7 @@ class CCamera;
 class CSkybox;
 class CShader;
 class CShaderProgram;
-class CPlane;
+class HDPlane;
 class CFreeTypeFont;
 class CHighResolutionTimer;
 class CSphere;
@@ -29,7 +29,7 @@ private:
 	CSkybox *m_pSkybox;
 	CCamera *m_pCamera;
 	vector <CShaderProgram *> *m_pShaderPrograms;
-	CPlane *m_pPlanarTerrain;
+	HDPlane *m_pPlanarTerrain;
 	CFreeTypeFont *m_pFtFont;
 	COpenAssetImportMesh *m_pBarrelMesh;
 	COpenAssetImportMesh *m_pHorseMesh;
@@ -42,6 +42,8 @@ private:
 	double m_dt;
 	int m_framesPerSecond;
 	bool m_appActive;
+	float timer = 0;
+	
 
 
 public:

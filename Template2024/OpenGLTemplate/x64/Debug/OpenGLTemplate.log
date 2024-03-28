@@ -1,6 +1,4 @@
-﻿  CatmullRom.cpp
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(605,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(606,54): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-     Creating library C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.lib and object C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.exp
-MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+﻿  Game.cpp
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(339,11): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(341,24): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   OpenGLTemplate.vcxproj -> C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.exe

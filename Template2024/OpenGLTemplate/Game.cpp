@@ -34,7 +34,7 @@ Source code drawn from a number of sources and examples, including contributions
 // Game includes
 #include "Camera.h"
 #include "Skybox.h"
-#include "Plane.h"
+#include "HDPlane.h"
 #include "Shaders.h"
 #include "FreeTypeFont.h"
 #include "Sphere.h"
@@ -97,7 +97,7 @@ void Game::Initialise()
 	m_pCamera = new CCamera;
 	m_pSkybox = new CSkybox;
 	m_pShaderPrograms = new vector <CShaderProgram *>;
-	m_pPlanarTerrain = new CPlane;
+	m_pPlanarTerrain = new HDPlane;
 	m_pFtFont = new CFreeTypeFont;
 	m_pBarrelMesh = new COpenAssetImportMesh;
 	m_pHorseMesh = new COpenAssetImportMesh;
@@ -120,6 +120,8 @@ void Game::Initialise()
 	sShaderFileNames.push_back("mainShader.frag");
 	sShaderFileNames.push_back("textShader.vert");
 	sShaderFileNames.push_back("textShader.frag");
+	sShaderFileNames.push_back("waterShader.vert");
+	sShaderFileNames.push_back("waterShader.frag");
 
 	for (int i = 0; i < (int) sShaderFileNames.size(); i++) {
 		string sExt = sShaderFileNames[i].substr((int) sShaderFileNames[i].size()-4, 4);
@@ -149,6 +151,12 @@ void Game::Initialise()
 	pFontProgram->AddShaderToProgram(&shShaders[3]);
 	pFontProgram->LinkProgram();
 	m_pShaderPrograms->push_back(pFontProgram);
+	CShaderProgram* pWaterProgram = new CShaderProgram;
+	pWaterProgram->CreateProgram();
+	pWaterProgram->AddShaderToProgram(&shShaders[4]);
+	pWaterProgram->AddShaderToProgram(&shShaders[5]);
+	pWaterProgram->LinkProgram();
+	m_pShaderPrograms->push_back(pWaterProgram);
 
 	// You can follow this pattern to load additional shaders
 
@@ -157,7 +165,7 @@ void Game::Initialise()
 	m_pSkybox->Create(2500.0f);
 	
 	// Create the planar terrain
-	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 50.0f); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 1000.0f, 1000.0f, 500); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
 	m_pFtFont->LoadSystemFont("arial.ttf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
@@ -177,6 +185,7 @@ void Game::Initialise()
 	
 	//Create CatmullCentreLine
 	m_pCatmullRom->CreateTrack();
+	
 }
 
 // Render method runs repeatedly in a loop
@@ -196,6 +205,8 @@ void Game::Render()
 	pMainProgram->UseProgram();
 	pMainProgram->SetUniform("bUseTexture", true);
 	pMainProgram->SetUniform("sampler0", 0);
+
+	
 	// Note: cubemap and non-cubemap textures should not be mixed in the same texture unit.  Setting unit 10 to be a cubemap texture.
 	int cubeMapTextureUnit = 10; 
 	pMainProgram->SetUniform("CubeMapTex", cubeMapTextureUnit);
@@ -212,7 +223,7 @@ void Game::Render()
 
 	
 	// Set light and materials in main shader program
-	glm::vec4 lightPosition1 = glm::vec4(-100, 100, -100, 1); // Position of light source *in world coordinates*
+	glm::vec4 lightPosition1 = glm::vec4(0, 100, 500, 1); // Position of light source *in world coordinates*
 	pMainProgram->SetUniform("light1.position", viewMatrix*lightPosition1); // Position of light source *in eye coordinates*
 	pMainProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
 	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
@@ -238,12 +249,7 @@ void Game::Render()
 	modelViewMatrixStack.Pop();
 
 
-	// Render the planar terrain
-	modelViewMatrixStack.Push();
-		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
-		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
-		m_pPlanarTerrain->Render();
-	modelViewMatrixStack.Pop();
+	
 
 
 	// Turn on diffuse + specular materials
@@ -295,6 +301,27 @@ void Game::Render()
 	m_pCatmullRom->RenderTrack();
 	modelViewMatrixStack.Pop();
 	
+	CShaderProgram* pWaterProgram = (*m_pShaderPrograms)[2];
+	pWaterProgram->UseProgram();
+	pWaterProgram->SetUniform("bUseTexture", false);
+	pWaterProgram->SetUniform("sampler0", 0);
+	pWaterProgram->SetUniform("t", timer);
+	pWaterProgram->SetUniform("light1.position", viewMatrix* lightPosition1); // Position of light source *in eye coordinates*
+	pWaterProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
+	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
+	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
+	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.f,0.5f));	// Ambient material reflectance
+	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.f, 0.f, 0.5f));	// Diffuse material reflectance
+	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.f, 0.f, 0.5f));	// Specular material reflectance
+	pWaterProgram->SetUniform("material1.shininess", 15.0f);
+	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
+	
+	// Render the planar terrain
+	modelViewMatrixStack.Push();
+	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
+	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
+	m_pPlanarTerrain->Render();
+	modelViewMatrixStack.Pop();
 	
 
 		
@@ -309,6 +336,7 @@ void Game::Render()
 // Update method runs repeatedly with the Render method
 void Game::Update() 
 {
+	timer += m_dt;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
 	m_currentDist += m_dt * 0.1f;
 	glm::vec3 curp,up,forward;

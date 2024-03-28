@@ -131,6 +131,7 @@
     <ClInclude Include="FreeTypeFont.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="HDPlane.h" />
     <ClInclude Include="HighResolutionTimer.h" />
     <ClInclude Include="MatrixStack.h" />
     <ClInclude Include="OpenAssetImportMesh.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="FreeTypeFont.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="HDPlane.cpp" />
     <ClCompile Include="HighResolutionTimer.cpp" />
     <ClCompile Include="MatrixStack.cpp" />
     <ClCompile Include="OpenAssetImportMesh.cpp" />
@@ -166,6 +168,8 @@
     <None Include="resources\shaders\mainShader.vert" />
     <None Include="resources\shaders\textShader.frag" />
     <None Include="resources\shaders\textShader.vert" />
+    <None Include="resources\shaders\waterShader.frag" />
+    <None Include="resources\shaders\waterShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

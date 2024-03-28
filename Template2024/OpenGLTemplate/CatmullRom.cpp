@@ -252,15 +252,15 @@ void CCatmullRom::CreateTrack()
 		binorm0 = glm::normalize(binorm0);
 		binorm1 = glm::normalize(binorm1);
 
-		p0 = m_leftOffsetPoints[i] + (norm0 * 2.f) + (binorm0 * 2.f);
-		p1 = m_leftOffsetPoints[i] - (norm0 * 2.f) + (binorm0 * 2.f);
-		p2 = m_leftOffsetPoints[i] - (norm0 * 2.f) - (binorm0 * 2.f);
-		p3 = m_leftOffsetPoints[i] + (norm0 * 2.f) - (binorm0 * 2.f);
+		p0 = m_leftOffsetPoints[i] + (norm0 * thickness) + (binorm0 * thickness);
+		p1 = m_leftOffsetPoints[i] - (norm0 * thickness) + (binorm0 * thickness);
+		p2 = m_leftOffsetPoints[i] - (norm0 * thickness) - (binorm0 * thickness);
+		p3 = m_leftOffsetPoints[i] + (norm0 * thickness) - (binorm0 * thickness);
 
-		p4 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) + (binorm1 * 2.f);
-		p5 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) + (binorm1 * 2.f);
-		p6 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) - (binorm1 * 2.f);
-		p7 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) - (binorm1 * 2.f);
+		p4 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * thickness) + (binorm1 * thickness);
+		p5 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * thickness) + (binorm1 * thickness);
+		p6 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * thickness) - (binorm1 * thickness);
+		p7 = m_leftOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * thickness) - (binorm1 * thickness);
 
 		n01 = binorm0;
 		n12 = -norm0;
@@ -438,15 +438,15 @@ void CCatmullRom::CreateTrack()
 		binorm0 = glm::normalize(binorm0);
 		binorm1 = glm::normalize(binorm1);
 
-		p0 = m_rightOffsetPoints[i] + (norm0 * 2.f) + (binorm0 * 2.f);
-		p1 = m_rightOffsetPoints[i] - (norm0 * 2.f) + (binorm0 * 2.f);
-		p2 = m_rightOffsetPoints[i] - (norm0 * 2.f) - (binorm0 * 2.f);
-		p3 = m_rightOffsetPoints[i] + (norm0 * 2.f) - (binorm0 * 2.f);
+		p0 = m_rightOffsetPoints[i] + (norm0 * thickness) + (binorm0 * thickness);
+		p1 = m_rightOffsetPoints[i] - (norm0 * thickness) + (binorm0 * thickness);
+		p2 = m_rightOffsetPoints[i] - (norm0 * thickness) - (binorm0 * thickness);
+		p3 = m_rightOffsetPoints[i] + (norm0 * thickness) - (binorm0 * thickness);
 
-		p4 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) + (binorm1 * 2.f);
-		p5 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) + (binorm1 * 2.f);
-		p6 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * 2.f) - (binorm1 * 2.f);
-		p7 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * 2.f) - (binorm1 * 2.f);
+		p4 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * thickness) + (binorm1 * thickness);
+		p5 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * thickness) + (binorm1 * thickness);
+		p6 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] - (norm1 * thickness) - (binorm1 * thickness);
+		p7 = m_rightOffsetPoints[(i + 1) % m_leftOffsetPoints.size()] + (norm1 * thickness) - (binorm1 * thickness);
 
 		n01 = binorm0;
 		n12 = -norm0;
