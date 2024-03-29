@@ -11,6 +11,7 @@ uniform struct Matrices
 	mat4 projMatrix;
 	mat4 modelViewMatrix; 
 	mat3 normalMatrix;
+	mat4 inverseViewMatrix;
 } matrices;
 
 // Structure holding light information:  its position as well as ambient, diffuse, and specular colours
@@ -45,34 +46,15 @@ layout (location = 2) in vec3 inNormal;
 // Vertex colour output to fragment shader -- using Gouraud (interpolated) shading
 out vec3 vColour;	// Colour computed using reflectance model
 out vec2 vTexCoord;	// Texture coordinate
-
+out vec3 reflected;
+out vec3 eyeN;
+out vec4 eyeP;
 out vec3 worldPosition;	// used for skybox
 
 // This function implements the Phong shading model
 // The code is based on the OpenGL 4.0 Shading Language Cookbook, Chapter 2, pp. 62 - 63, with a few tweaks. 
 // Please see Chapter 2 of the book for a detailed discussion.
-vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm,vec3 pointPos)
-{
-	vec3 s = normalize(vec3(light1.position - eyePosition));
-	//vec3 v = normalize(eyePosition.xyz);
-	//vec3 h = normalize(v + s);
-	//vec3 n = eyeNorm;
-	//vec3 ambientColour = light1.La * material1.Ma;
-	//float fDiffuseIntensity = max(dot(s, n), 0.0);
-	//vec3 diffuseColour = light1.Ld * material1.Md * fDiffuseIntensity;
-	//vec3 specularColour = vec3(0.0);
-	//float fSpecularIntensity = 0.0;
-	//if (fDiffuseIntensity > 0.0) {
-	//	fSpecularIntensity = pow(max(dot(h, n), 0.0), material1.shininess);
-	//	specularColour = light1.Ls * material1.Ms * fSpecularIntensity;
-	//}
-	
-	//return diffuseColour+specularColour+ambientColour;
 
-	//vec3 s= normalize(vec3(light1.position-vec4(pointPos,1)));
-	return vec3(dot(s,eyeNorm));
-
-}
 
 
 vec3 UpdatePosition(vec3 p)
@@ -85,17 +67,17 @@ vec3 UpdatePosition(vec3 p)
 	{
 		
 		vec2 randVec=vec2(cos(seed),sin(seed));
-		float angle=dot(planeVec,randVec)*0.05f*pow(1.5,i) + t*0.001f*pow(1.1,i);
-		 p.y+=6*pow(2.718,1*pow(0.6,i)*(sin(angle)-1));
-		 tangent+=6*randVec.x*0.07f*pow(1.2,i)*1*pow(0.6,i)*cos(angle)*pow(2.718,1*pow(0.6,i)*(sin(angle)-1));
-		 binormal+=6*randVec.y*0.07f*pow(1.2,i)*1*pow(0.6,i)*cos(angle)*pow(2.718,1*pow(0.6,i)*(sin(angle)-1));
+		float angle=dot(planeVec,randVec)*0.05f*pow(1.3,i) + t*0.001f*pow(1.2,i);
+		 p.y+=6*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
+		 tangent+=6*randVec.x*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
+		 binormal+=6*randVec.y*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
 		  seed=random();
 	}
-	tangentVec=normalize(vec3(1,0,tangent));
-	binormalVec=normalize(vec3(0,1,binormal));
+	tangentVec=vec3(1,0,tangent);
+	binormalVec=vec3(0,1,binormal);
 	normalVec= normalize(cross(tangentVec,binormalVec));
-	p.x+=15*tangent;
-	p.z+=15*binormal;
+	p.x+=10*tangent;
+	p.z+=10*binormal;
 	return p;
 }
 // This is the entry point into the vertex shader
@@ -112,11 +94,15 @@ void main()
 	// Get the vertex normal and vertex position in eye coordinates
 	vec3 vEyeNorm = normalize(matrices.normalMatrix * normalVec);
 	vec4 vEyePosition = matrices.modelViewMatrix * vec4(p, 1.0f);
-		
+	eyeN=vEyeNorm;
+	eyeP=vEyePosition;
 	// Apply the Phong model to compute the vertex colour
-	vColour = PhongModel(vEyePosition,vEyeNorm,p);
 	
 	// Pass through the texture coordinate
 	vTexCoord = inCoord;
+
+	vec3 refn = normalize(matrices.normalMatrix * normalVec);
+	vec3 refp = (matrices.modelViewMatrix * vec4(p, 1.0f)).xyz;
+	reflected = (matrices.inverseViewMatrix * vec4(reflect(refp, refn), 1)).xyz;
 } 
 	

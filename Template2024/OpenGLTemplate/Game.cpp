@@ -165,7 +165,7 @@ void Game::Initialise()
 	m_pSkybox->Create(2500.0f);
 	
 	// Create the planar terrain
-	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 1000.0f, 1000.0f, 500); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 400.0f, 400.0f, 100); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
 	m_pFtFont->LoadSystemFont("arial.ttf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
@@ -177,7 +177,9 @@ void Game::Initialise()
 	// Create a sphere
 	m_pSphere->Create("resources\\textures\\", "dirtpile01.jpg", 25, 25);  // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 	glEnable(GL_CULL_FACE);
-
+	;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Initialise audio and play background music
 	m_pAudio->Initialise();
 	m_pAudio->LoadEventSound("resources\\Audio\\Boing.wav");					// Royalty free sound from freesound.org
@@ -223,7 +225,7 @@ void Game::Render()
 
 	
 	// Set light and materials in main shader program
-	glm::vec4 lightPosition1 = glm::vec4(0, 100, 500, 1); // Position of light source *in world coordinates*
+	glm::vec4 lightPosition1 = glm::vec4(0, 10, 0, 1); // Position of light source *in world coordinates*
 	pMainProgram->SetUniform("light1.position", viewMatrix*lightPosition1); // Position of light source *in eye coordinates*
 	pMainProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
 	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
@@ -306,19 +308,21 @@ void Game::Render()
 	pWaterProgram->SetUniform("bUseTexture", false);
 	pWaterProgram->SetUniform("sampler0", 0);
 	pWaterProgram->SetUniform("t", timer);
-	pWaterProgram->SetUniform("light1.position", viewMatrix* lightPosition1); // Position of light source *in eye coordinates*
+	glm::vec4 lightPosition = glm::vec4(0,200,200, 1);
+	pWaterProgram->SetUniform("light1.position", viewMatrix* lightPosition); // Position of light source *in eye coordinates*
 	pWaterProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
 	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
 	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
-	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.f,0.5f));	// Ambient material reflectance
-	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.f, 0.f, 0.5f));	// Diffuse material reflectance
-	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.f, 0.f, 0.5f));	// Specular material reflectance
+	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.1f,0.3f));	// Ambient material reflectance
+	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.f, 0.3f, 0.6f));	// Diffuse material reflectance
+	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.4f, 0.8f, 1.f));	// Specular material reflectance
 	pWaterProgram->SetUniform("material1.shininess", 15.0f);
 	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
-	
 	// Render the planar terrain
 	modelViewMatrixStack.Push();
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, -100.0f, 0.0f));
 	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
+	pWaterProgram->SetUniform("matrices.inverseViewMatrix", glm::inverse(m_pCamera->GetViewMatrix()));
 	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
 	m_pPlanarTerrain->Render();
 	modelViewMatrixStack.Pop();
@@ -336,6 +340,7 @@ void Game::Render()
 // Update method runs repeatedly with the Render method
 void Game::Update() 
 {
+
 	timer += m_dt;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
 	m_currentDist += m_dt * 0.1f;

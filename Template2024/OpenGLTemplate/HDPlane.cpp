@@ -45,11 +45,11 @@ void HDPlane::Create(string directory, string filename, float width, float heigh
 	std::vector<glm::vec3> planeVertices;
 	std::vector<glm::vec2> textureValues;
 	
-	for (int i = -resolution/2; i < resolution/2; i++)
+	for (int i = 0; i < resolution; i++)
 	{
-		for (int j = -resolution/2; j < resolution/2; j++)
+		for (int j = 0; j < resolution; j++)
 		{
-			glm::vec3 pos = glm::vec3(width * (float)i / (float)resolution, 0, height * (float)j / (float)resolution);
+			glm::vec3 pos = glm::vec3((width * (float)i / (float)resolution) - halfWidth, 0, (height * (float)j / (float)resolution)-halfHeight);
 			glm::vec2 texPos = glm::vec2((float)i / (float)resolution, (float)j / (float)resolution);
 			glm::vec3 norm(0, 1, 0);
 			planeVertices.push_back(pos);
