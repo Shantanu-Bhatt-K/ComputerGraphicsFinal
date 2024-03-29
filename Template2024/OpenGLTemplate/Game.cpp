@@ -267,7 +267,7 @@ void Game::Render()
 
 	// Render the horse 
 	modelViewMatrixStack.Push();
-		modelViewMatrixStack.Translate(glm::vec3(0.0f,horsey-105, 0.0f));
+		modelViewMatrixStack.Translate(glm::vec3(0.0f,0.0f, 0.0f));
 		modelViewMatrixStack.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180.0f);
 		modelViewMatrixStack.Scale(2.5f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
@@ -318,14 +318,14 @@ void Game::Render()
 	pWaterProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
 	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
 	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
-	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.1f,0.3f));	// Ambient material reflectance
-	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.f, 0.3f, 0.6f));	// Diffuse material reflectance
+	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.0f,0.0f));	// Ambient material reflectance
+	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.2f, 0.3f, 0.2f));	// Diffuse material reflectance
 	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.4f, 0.8f, 1.f));	// Specular material reflectance
-	pWaterProgram->SetUniform("material1.shininess", 15.0f);
+	pWaterProgram->SetUniform("material1.shininess", 200.0f);
 	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
 	// Render the planar terrain
 	modelViewMatrixStack.Push();
-	modelViewMatrixStack.Translate(glm::vec3(0.0f, -100.0f, 0.0f));
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, -400.0f, 0.0f));
 	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pWaterProgram->SetUniform("matrices.inverseViewMatrix", glm::inverse(m_pCamera->GetViewMatrix()));
 	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
@@ -345,17 +345,7 @@ void Game::Render()
 // Update method runs repeatedly with the Render method
 void Game::Update() 
 {
-	float seed = 0;
-	horsey = 0;
-	for (int i = 0; i < 20; i++)
-	{
-		glm::vec2 planeVec = glm:: vec2(0, 0);
-		glm::vec2 randVec = glm::vec2(cos(seed), sin(seed));
-		float angle = dot(planeVec, randVec) * 0.05f * pow(1.3, i) + timer * 0.001f * pow(1.2, i);
-		horsey += 6 * pow(2.718, 1 * pow(0.65, i) * (sin(angle) - 1));
-		
-		seed = random();
-	}
+	
 	timer += m_dt;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
 	m_currentDist += m_dt * 0.1f;

@@ -3,44 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\HDPlane.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\HDPlane.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\FreeTypeFont.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\FreeTypeFont.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\waterShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\waterShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\FreeTypeFont.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\FreeTypeFont.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\mainShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Skybox.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\Skybox.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\waterShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\HDPlane.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\HDPlane.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\mainShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\HDPlane.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\HDPlane.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\mainShader.frag||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|solutionrelative:OpenGLTemplate\\resources\\shaders\\mainShader.vert||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F934CE0-80A0-4B54-8AEC-F5E979A66400}|OpenGLTemplate\\OpenGLTemplate.vcxproj|C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -74,36 +74,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "waterShader.vert",
-              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.vert",
-              "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\waterShader.vert",
-              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.vert",
-              "RelativeToolTip": "OpenGLTemplate\\resources\\shaders\\waterShader.vert",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-03-28T13:46:11.463Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "mainShader.frag",
-              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag",
-              "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\mainShader.frag",
-              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag",
-              "RelativeToolTip": "OpenGLTemplate\\resources\\shaders\\mainShader.frag",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-03-28T13:14:45.165Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "mainShader.vert",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.vert",
               "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\mainShader.vert",
@@ -115,7 +90,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp",
+              "RelativeDocumentMoniker": "OpenGLTemplate\\Game.cpp",
+              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp",
+              "RelativeToolTip": "OpenGLTemplate\\Game.cpp",
+              "ViewState": "AQIAADQBAAAAAAAAAAAAAEEBAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-26T14:23:08.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "mainShader.frag",
+              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag",
+              "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\mainShader.frag",
+              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\mainShader.frag",
+              "RelativeToolTip": "OpenGLTemplate\\resources\\shaders\\mainShader.frag",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-03-28T13:14:45.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "HDPlane.cpp",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\HDPlane.cpp",
               "RelativeDocumentMoniker": "OpenGLTemplate\\HDPlane.cpp",
@@ -123,11 +124,12 @@
               "RelativeToolTip": "OpenGLTemplate\\HDPlane.cpp",
               "ViewState": "AQIAAFQAAAAAAAAAAAAAADMAAACBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-28T12:17:39.297Z"
+              "WhenOpened": "2024-03-28T12:17:39.297Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "HDPlane.h",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\HDPlane.h",
               "RelativeDocumentMoniker": "OpenGLTemplate\\HDPlane.h",
@@ -135,12 +137,11 @@
               "RelativeToolTip": "OpenGLTemplate\\HDPlane.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-28T12:09:59.125Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-28T12:09:59.125Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "FreeTypeFont.cpp",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\FreeTypeFont.cpp",
               "RelativeDocumentMoniker": "OpenGLTemplate\\FreeTypeFont.cpp",
@@ -153,33 +154,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Game.cpp",
-              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp",
-              "RelativeDocumentMoniker": "OpenGLTemplate\\Game.cpp",
-              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp",
-              "RelativeToolTip": "OpenGLTemplate\\Game.cpp",
-              "ViewState": "AQIAAEEBAAAAAAAAAAAAAA0BAAA6AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-26T14:23:08.756Z",
+              "DocumentIndex": 1,
+              "Title": "waterShader.vert",
+              "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.vert",
+              "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\waterShader.vert",
+              "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.vert",
+              "RelativeToolTip": "OpenGLTemplate\\resources\\shaders\\waterShader.vert",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAAC4AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-03-28T13:46:11.463Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "waterShader.frag",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.frag",
               "RelativeDocumentMoniker": "OpenGLTemplate\\resources\\shaders\\waterShader.frag",
               "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\resources\\shaders\\waterShader.frag",
               "RelativeToolTip": "OpenGLTemplate\\resources\\shaders\\waterShader.frag",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAAAC4AAAAMAAAA",
+              "ViewState": "AQIAADwAAAAAAAAAAAAAAEcAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-03-28T18:20:28.875Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Skybox.cpp",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Skybox.cpp",
               "RelativeDocumentMoniker": "OpenGLTemplate\\Skybox.cpp",
@@ -192,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.h",
               "RelativeDocumentMoniker": "OpenGLTemplate\\Game.h",
@@ -200,8 +201,7 @@
               "RelativeToolTip": "OpenGLTemplate\\Game.h",
               "ViewState": "AQIAAB4AAAAAAAAAAAAAAC0AAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-26T14:23:27.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-26T14:23:27.912Z"
             },
             {
               "$type": "Document",
