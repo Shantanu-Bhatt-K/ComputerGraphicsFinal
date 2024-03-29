@@ -25,6 +25,11 @@ Source code drawn from a number of sources and examples, including contributions
 
 
 #include "game.h"
+int seed = 1;
+float random() {
+	seed = seed * 22695477 + 1;
+	return (seed >> 16) & 0x7fff;
+}
 
 
 // Setup includes
@@ -262,7 +267,7 @@ void Game::Render()
 
 	// Render the horse 
 	modelViewMatrixStack.Push();
-		modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
+		modelViewMatrixStack.Translate(glm::vec3(0.0f,horsey-105, 0.0f));
 		modelViewMatrixStack.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180.0f);
 		modelViewMatrixStack.Scale(2.5f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
@@ -340,7 +345,17 @@ void Game::Render()
 // Update method runs repeatedly with the Render method
 void Game::Update() 
 {
-
+	float seed = 0;
+	horsey = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		glm::vec2 planeVec = glm:: vec2(0, 0);
+		glm::vec2 randVec = glm::vec2(cos(seed), sin(seed));
+		float angle = dot(planeVec, randVec) * 0.05f * pow(1.3, i) + timer * 0.001f * pow(1.2, i);
+		horsey += 6 * pow(2.718, 1 * pow(0.65, i) * (sin(angle) - 1));
+		
+		seed = random();
+	}
 	timer += m_dt;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
 	m_currentDist += m_dt * 0.1f;

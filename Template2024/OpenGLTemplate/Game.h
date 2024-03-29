@@ -43,7 +43,7 @@ private:
 	int m_framesPerSecond;
 	bool m_appActive;
 	float timer = 0;
-	
+	float horsey = 0;
 
 
 public:
