@@ -30,25 +30,43 @@ glm::vec3 CCatmullRom::Interpolate(glm::vec3 &p0, glm::vec3 &p1, glm::vec3 &p2, 
 
 void CCatmullRom::SetControlPoints()
 {
+	
 	// Set control points (m_controlPoints) here, or load from disk
-	m_controlPoints.push_back(glm::vec3(100, 5, 0));
-	m_controlPoints.push_back(glm::vec3(71, 5, 71));
-	m_controlPoints.push_back(glm::vec3(0, 5, 100));
-	m_controlPoints.push_back(glm::vec3(-71, 5, 71));
-	m_controlPoints.push_back(glm::vec3(-100, 5, 0));
-	m_controlPoints.push_back(glm::vec3(-71, 5, -71));
-	m_controlPoints.push_back(glm::vec3(0, 5, -100));
-	m_controlPoints.push_back(glm::vec3(71, 5, -71));
+	m_controlPoints.push_back({ 510.2198641236067, -113.78207104999922, -180.12820609432634 });
+	m_controlPoints.push_back({ 265.5160002690295, 9.594301977361333, 78.42151665193104 });
+	m_controlPoints.push_back({ 176.53097042149386, -43.864811154874225, 47.75058016175143 });
+	m_controlPoints.push_back({ 1.6276066624723367, -34.79675387337366, -13.866281996862867 });
+	m_controlPoints.push_back({ -62.02226572048809, 92.14552416732394, -12.517340229687854 });
+	m_controlPoints.push_back({ 29.064548644549912, -2.5068118769684737, -255.50924402137275 });
+	m_controlPoints.push_back({ 389.23557673943685, 101.08086462674714, 35.48750277499863 });
+	m_controlPoints.push_back({ 395.5122443538989, 7.97273118007422, -255.55316336706846 });
+	m_controlPoints.push_back({ 199.49598800904135, -101.9116339123164, -269.44694682577483 });
+	m_controlPoints.push_back({ 124.68614989829528, -60.852728282409565, -136.15397392996744 });
+	m_controlPoints.push_back({ 200.99747765501382, -58.36899654877083, -61.61968487768833 });
+	m_controlPoints.push_back({ 440.4388489006723, -132.67537037545313, -298.79066908762184 });
+	m_controlPoints.push_back({ 510.2198641236067, -152.12812587036268, -246.5040924711575 });
+
+
+
+	
 	// Optionally, set upvectors (m_controlUpVectors, one for each control point as well)
 
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
+	m_controlUpVectors.push_back(glm::vec3(1, 0, 1));
+	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
+	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
+	m_controlUpVectors.push_back(glm::vec3(1, 0, 1));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
+	m_controlUpVectors.push_back(glm::vec3(1, 0, -1));
+	
+
+	
 }
 
 
@@ -211,10 +229,10 @@ void CCatmullRom::CreateCentreline()
 void CCatmullRom::CreateOffsetCurves()
 {
 	SetControlPoints();
-	UniformlySampleControlPoints(500);
+	UniformlySampleControlPoints(1000);
 	for (int i = 0; i < m_centrelinePoints.size(); i++)
 	{
-		glm::vec3 normal = glm::cross(m_centrelineUpVectors[i], m_centrelineTangentVectors[i]);
+		glm::vec3 normal = glm::normalize(glm::cross(m_centrelineUpVectors[i], m_centrelineTangentVectors[i]));
 		m_leftOffsetPoints.push_back(m_centrelinePoints[i] + normal * 10.f);
 		m_rightOffsetPoints.push_back(m_centrelinePoints[i] - normal * 10.f);
 	}
@@ -226,6 +244,9 @@ void CCatmullRom::CreateOffsetCurves()
 
 void CCatmullRom::CreateTrack()
 {
+	m_texture.Load("resources\\textures\\TrackEdge.jpg");
+
+	
 	CreateOffsetCurves();
 	glGenVertexArrays(1, &m_vaoLeftOffsetCurve);
 	glBindVertexArray(m_vaoLeftOffsetCurve);
@@ -616,6 +637,7 @@ void CCatmullRom::RenderOffsetCurves()
 
 void CCatmullRom::RenderTrack()
 {
+	m_texture.Bind();
 	glBindVertexArray(m_vaoLeftOffsetCurve);
 	glDrawArrays(GL_TRIANGLES,0,m_vertexLeft);
 	glBindVertexArray(m_vaoRightOffsetCurve);
@@ -627,6 +649,10 @@ int CCatmullRom::CurrentLap(float d)
 
 	return (int)(d / m_distances.back());
 
+}
+ float CCatmullRom::totalDist()
+{
+	return m_distances.back();
 }
 
 glm::vec3 CCatmullRom::_dummy_vector(0.0f, 0.0f, 0.0f);

@@ -24,7 +24,7 @@ public:
 	void CreateTrack();
 	void RenderTrack();
 	float tiling = 100;
-
+	float totalDist();
 	float thickness = 1.f;
 	int CurrentLap(float d); // Return the currvent lap (starting from 0) based on distance along the control curve.
 

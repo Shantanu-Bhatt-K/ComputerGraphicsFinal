@@ -40,7 +40,7 @@ out vec3 vColour;	// Colour computed using reflectance model
 out vec2 vTexCoord;	// Texture coordinate
 
 out vec3 worldPosition;	// used for skybox
-
+out vec3 eyePos;
 // This function implements the Phong shading model
 // The code is based on the OpenGL 4.0 Shading Language Cookbook, Chapter 2, pp. 62 - 63, with a few tweaks. 
 // Please see Chapter 2 of the book for a detailed discussion.
@@ -76,7 +76,7 @@ void main()
 	// Get the vertex normal and vertex position in eye coordinates
 	vec3 vEyeNorm = normalize(matrices.normalMatrix * inNormal);
 	vec4 vEyePosition = matrices.modelViewMatrix * vec4(inPosition, 1.0f);
-		
+	eyePos=vEyePosition.xyz;	
 	// Apply the Phong model to compute the vertex colour
 	vColour = PhongModel(vEyePosition, vEyeNorm);
 	

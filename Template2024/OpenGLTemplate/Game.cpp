@@ -170,7 +170,7 @@ void Game::Initialise()
 	m_pSkybox->Create(2500.0f);
 	
 	// Create the planar terrain
-	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 400.0f, 400.0f, 100); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 500); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
 	m_pFtFont->LoadSystemFont("arial.ttf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
@@ -301,7 +301,7 @@ void Game::Render()
 	//render centre line
 	modelViewMatrixStack.Push();
 	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
-	pMainProgram->SetUniform("bUseTexture", false);
+	pMainProgram->SetUniform("bUseTexture", true);
 	pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
 	
@@ -325,7 +325,7 @@ void Game::Render()
 	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
 	// Render the planar terrain
 	modelViewMatrixStack.Push();
-	modelViewMatrixStack.Translate(glm::vec3(0.0f, -400.0f, 0.0f));
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, -600.0f, 0.0f));
 	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pWaterProgram->SetUniform("matrices.inverseViewMatrix", glm::inverse(m_pCamera->GetViewMatrix()));
 	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
@@ -347,12 +347,41 @@ void Game::Update()
 {
 	
 	timer += m_dt;
+
+	m_accel = 0;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
-	m_currentDist += m_dt * 0.1f;
+	
+	
 	glm::vec3 curp,up,forward;
 	m_pCatmullRom->Sample(m_currentDist, curp,up,forward);
-	
-	m_pCamera->Update(m_dt);
+
+	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
+		m_accel += accel;
+	}
+
+	if (GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80) {
+		m_accel -= accel;
+
+	}
+	m_accel += accel * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
+		m_velocity += m_accel * m_dt;
+	if (m_velocity > 0)
+	{
+		m_velocity -= 0.01f * pow(m_velocity, 2);
+
+	}
+	else
+	{
+		m_velocity += 0.01f * pow(m_velocity, 2);
+	}
+	m_currentDist += m_velocity * m_dt;
+	if (m_currentDist <= 0)
+	{
+		
+		m_currentDist =m_pCatmullRom->totalDist()-m_currentDist;
+	}
+	//m_pCamera->Update(m_dt);
+	m_pCamera->Set(curp + up * 10.f, curp + up * 7.f + forward * 10.f, up);
 
 	m_pAudio->Update();
 }
@@ -390,7 +419,8 @@ void Game::DisplayFrameRate()
 		fontProgram->SetUniform("matrices.modelViewMatrix", glm::mat4(1));
 		fontProgram->SetUniform("matrices.projMatrix", m_pCamera->GetOrthographicProjectionMatrix());
 		fontProgram->SetUniform("vColour", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		m_pFtFont->Render(20, height - 20, 20, "FPS: %d", m_framesPerSecond);
+		m_pFtFont->Render(20, height - 20, 20, "Speed: %f", m_velocity);
+		m_pFtFont->Render(20, height - 50, 20, "Acceleration: %f", m_accel);
 	}
 }
 

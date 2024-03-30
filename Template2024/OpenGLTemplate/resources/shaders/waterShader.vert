@@ -66,7 +66,7 @@ vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm)
 	vec3 diffuseColour = material1.Md * fDiffuseIntensity;
 	vec3 specularColour = vec3(0.0);
 	float fSpecularIntensity=0;
-	vec3 fresnel=vec3(pow((1-dot(v,n))/2,100));
+	vec3 fresnel=vec3(pow((1-dot(v,n))/2,50));
 	
 	if(fDiffuseIntensity>0)
 		fSpecularIntensity =  pow(max(dot(h, n), 0.0), material1.shininess);

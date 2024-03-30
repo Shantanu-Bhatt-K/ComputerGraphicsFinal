@@ -37,7 +37,7 @@ in vec2 vTexCoord;
 in vec3 eyeN;
 in vec3 p;
 in vec4 eyeP;// Interpolated texture coordinate using texture coordinate from the vertex shader
-in vec3 vColour;
+
 out vec4 vOutputColour;	
 // The output colour
 
@@ -47,11 +47,34 @@ uniform bool bUseTexture;    // A flag indicating if texture-mapping should be a
 uniform bool renderSkybox;
 in vec3 worldPosition;
 uniform float t;
+vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm)
+{
+	vec3 s = normalize(vec3(light1.position - eyePosition));
+	vec3 v = normalize(eyePosition.xyz);
+	vec3 h = normalize(v + s);
+	vec3 n = eyeNorm;
+	vec3 ambientColour = light1.La * material1.Ma;
+	float fDiffuseIntensity = max(dot(s, n),0);
+	vec3 diffuseColour = material1.Md * fDiffuseIntensity;
+	vec3 specularColour = vec3(0.0);
+	float fSpecularIntensity=0;
+	vec3 fresnel=vec3(pow((1-dot(v,n))/2,50));
+	
+	if(fDiffuseIntensity>0)
+		fSpecularIntensity =  pow(max(dot(h, n), 0.0), 30);
+	specularColour = light1.Ls* fSpecularIntensity*material1.Ms;
+	
+	return diffuseColour+specularColour+ambientColour+fresnel;
+	// 
 
+}
 void main()
 {
-vec2 planeVec=vec2(worldPosition.x,worldPosition.z);
-	
+	vec3 vColour=PhongModel(eyeP,normalize(eyeN));
+	vec3 fogColour=  vec3(0.75f);
+	float rho=0.006;
+		float d = length(eyeP.xyz);
+		float w = exp(-pow(rho*d,2));
 
 	if (renderSkybox) {
 		vOutputColour = texture(CubeMapTex, worldPosition);
@@ -66,10 +89,16 @@ vec2 planeVec=vec2(worldPosition.x,worldPosition.z);
 		 
 		 vec3 reflected = (matrices.inverseViewMatrix * vec4(reflect(refp,refn), 1)).xyz;
 		 vec3 refracted=(matrices.inverseViewMatrix * vec4(refract(refp,refn,0.66), 1)).xyz;
+		
+		
 		if (bUseTexture)
 			vOutputColour = vTexColour*vec4(vColour, 1.0f);	// Combine object colour and texture 
 		else
-			vOutputColour =vec4(vColour,1.0f)*texture(CubeMapTex,normalize(reflected))+vec4(smoothstep(460,480,p.y),smoothstep(460,470,p.y),smoothstep(460,470,p.y),1);// Just use the colour instead
+		{
+		vOutputColour =vec4(vColour,1.0f)*texture(CubeMapTex,normalize(reflected))+vec4(smoothstep(460,480,p.y),smoothstep(460,470,p.y),smoothstep(460,470,p.y),1);// Just use the colour instead
+		vOutputColour.rgb = mix(fogColour, vOutputColour.rgb, w);
+		}
+			
 			
 	}
 	
