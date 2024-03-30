@@ -72,10 +72,10 @@ void main()
 {
 	vec3 vColour=PhongModel(eyeP,normalize(eyeN));
 	vec3 fogColour=  vec3(0.75f);
-	float rho=0.006;
+	float rho=0.003;
 		float d = length(eyeP.xyz);
-		float w = exp(-pow(rho*d,2));
-
+		float w = exp(-pow(rho*d,2))+pow(smoothstep(0,2500,worldPosition.y),1);
+		
 	if (renderSkybox) {
 		vOutputColour = texture(CubeMapTex, worldPosition);
 

@@ -42,9 +42,9 @@ void CCatmullRom::SetControlPoints()
 	m_controlPoints.push_back({ 395.5122443538989, 7.97273118007422, -255.55316336706846 });
 	m_controlPoints.push_back({ 199.49598800904135, -101.9116339123164, -269.44694682577483 });
 	m_controlPoints.push_back({ 124.68614989829528, -60.852728282409565, -136.15397392996744 });
-	m_controlPoints.push_back({ 200.99747765501382, -58.36899654877083, -61.61968487768833 });
-	m_controlPoints.push_back({ 440.4388489006723, -132.67537037545313, -298.79066908762184 });
-	m_controlPoints.push_back({ 510.2198641236067, -152.12812587036268, -246.5040924711575 });
+	m_controlPoints.push_back({ 200.99747765501382, -100.36899654877083, -61.61968487768833 });
+	m_controlPoints.push_back({ 400.4388489006723, -120.67537037545313, -200.79066908762184 });
+	m_controlPoints.push_back({ 470.2198641236067, -180.12812587036268, -246.5040924711575 });
 
 
 
@@ -56,14 +56,14 @@ void CCatmullRom::SetControlPoints()
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(1, 0, 1));
-	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
-	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
+	m_controlUpVectors.push_back(glm::vec3(0, -1, 0));
+	m_controlUpVectors.push_back(glm::vec3(1, 0, 1));
 	m_controlUpVectors.push_back(glm::vec3(1, 0, 1));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
 	m_controlUpVectors.push_back(glm::vec3(0, 1, 0));
-	m_controlUpVectors.push_back(glm::vec3(1, 0, -1));
+	m_controlUpVectors.push_back(glm::vec3(0,1, 0));
 	
 
 	
@@ -229,7 +229,7 @@ void CCatmullRom::CreateCentreline()
 void CCatmullRom::CreateOffsetCurves()
 {
 	SetControlPoints();
-	UniformlySampleControlPoints(1000);
+	UniformlySampleControlPoints(2000);
 	for (int i = 0; i < m_centrelinePoints.size(); i++)
 	{
 		glm::vec3 normal = glm::normalize(glm::cross(m_centrelineUpVectors[i], m_centrelineTangentVectors[i]));

@@ -47,6 +47,7 @@ float random() {
 #include "OpenAssetImportMesh.h"
 #include "Audio.h"
 #include "CatmullRom.h"
+#include "Gem.h"
 
 // Constructor
 Game::Game()
@@ -62,6 +63,7 @@ Game::Game()
 	m_pHighResolutionTimer = NULL;
 	m_pAudio = NULL;
 	m_pCatmullRom = NULL;
+	m_player = NULL;
 	m_dt = 0.0;
 	m_framesPerSecond = 0;
 	m_frameCount = 0;
@@ -81,6 +83,7 @@ Game::~Game()
 	delete m_pSphere;
 	delete m_pAudio;
 	delete m_pCatmullRom;
+	delete m_player;
 	if (m_pShaderPrograms != NULL) {
 		for (unsigned int i = 0; i < m_pShaderPrograms->size(); i++)
 			delete (*m_pShaderPrograms)[i];
@@ -109,6 +112,7 @@ void Game::Initialise()
 	m_pSphere = new CSphere;
 	m_pAudio = new CAudio;
 	m_pCatmullRom = new CCatmullRom;
+	m_player = new CGem;
 	RECT dimensions = m_gameWindow.GetDimensions();
 
 	int width = dimensions.right - dimensions.left;
@@ -179,12 +183,12 @@ void Game::Initialise()
 	m_pBarrelMesh->Load("resources\\models\\Barrel\\Barrel02.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
 	m_pHorseMesh->Load("resources\\models\\Horse\\Horse2.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
 
+	//Create player body
+	m_player->CreateInterleaved("resources\\textures\\", "Player.jpg", 8, 1.f, 0.3f);
 	// Create a sphere
 	m_pSphere->Create("resources\\textures\\", "dirtpile01.jpg", 25, 25);  // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 	glEnable(GL_CULL_FACE);
-	;
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	// Initialise audio and play background music
 	m_pAudio->Initialise();
 	m_pAudio->LoadEventSound("resources\\Audio\\Boing.wav");					// Royalty free sound from freesound.org
@@ -287,15 +291,17 @@ void Game::Render()
 	modelViewMatrixStack.Pop();
 	
 
-	// Render the sphere
+	// Render the player
 	modelViewMatrixStack.Push();
-		modelViewMatrixStack.Translate(glm::vec3(0.0f, 2.0f, 150.0f));
-		modelViewMatrixStack.Scale(2.0f);
+		modelViewMatrixStack.Translate(playerPos);
+		modelViewMatrixStack.Rotate(normal, 80.f);
+		modelViewMatrixStack *= playerOrientation;
+		modelViewMatrixStack.Scale(2.f);
+		
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
-		// To turn off texture mapping and use the sphere colour only (currently white material), uncomment the next line
-		//pMainProgram->SetUniform("bUseTexture", false);
-		m_pSphere->Render();
+		pMainProgram->SetUniform("bUseTexture", true);
+		m_player->Render();
 	modelViewMatrixStack.Pop();
 
 	//render centre line
@@ -325,7 +331,7 @@ void Game::Render()
 	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
 	// Render the planar terrain
 	modelViewMatrixStack.Push();
-	modelViewMatrixStack.Translate(glm::vec3(0.0f, -600.0f, 0.0f));
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, -650.0f, 0.0f));
 	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pWaterProgram->SetUniform("matrices.inverseViewMatrix", glm::inverse(m_pCamera->GetViewMatrix()));
 	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
@@ -352,9 +358,14 @@ void Game::Update()
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
 	
 	
-	glm::vec3 curp,up,forward;
-	m_pCatmullRom->Sample(m_currentDist, curp,up,forward);
 
+	m_pCatmullRom->Sample(m_currentDist, curp,up,forward);
+	forward = glm::normalize(forward);
+	up = glm::normalize(up);
+	normal = glm::cross(forward, up);
+	
+	normal = glm::normalize(normal);
+	up = glm::cross(normal, forward);
 	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
 		m_accel += accel;
 	}
@@ -381,8 +392,10 @@ void Game::Update()
 		m_currentDist =m_pCatmullRom->totalDist()-m_currentDist;
 	}
 	//m_pCamera->Update(m_dt);
-	m_pCamera->Set(curp + up * 10.f, curp + up * 7.f + forward * 10.f, up);
+	m_pCamera->Set(curp +up*(10.f - 5.f * m_velocity) -(forward*(10.f+50.f*m_velocity)), curp +forward * 10.f, up);
+	playerPos = curp;
 
+	playerOrientation = glm::mat4(glm::mat3(forward, up,normal));
 	m_pAudio->Update();
 }
 

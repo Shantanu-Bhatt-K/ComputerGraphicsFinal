@@ -17,6 +17,7 @@ class CSphere;
 class COpenAssetImportMesh;
 class CAudio;
 class CCatmullRom;
+class CGem;
 
 class Game {
 private:
@@ -37,6 +38,7 @@ private:
 	CHighResolutionTimer *m_pHighResolutionTimer;
 	CAudio *m_pAudio;
 	CCatmullRom* m_pCatmullRom;
+	CGem* m_player;
 
 	// Some other member variables
 	double m_dt;
@@ -45,6 +47,9 @@ private:
 	float timer = 0;
 	float accel = 0.0003f;
 	float m_accel, m_velocity;
+	glm::vec3 playerPos;
+	glm::vec3 curp, up,prevforward=glm::vec3(0,0,0), forward, normal;
+	glm::mat4 playerOrientation;
 
 
 public:
