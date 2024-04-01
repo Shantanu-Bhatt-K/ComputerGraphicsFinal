@@ -9,6 +9,9 @@ struct CVertex {
 	glm::vec2 texture;
 	glm::vec3 normal;
 };
+
+
+
 class CCatmullRom
 {
 public:
@@ -23,6 +26,7 @@ public:
 
 	void CreateTrack();
 	void RenderTrack();
+	void ReleaseTrack();
 	float tiling = 100;
 	float totalDist();
 	float thickness = 1.f;
@@ -57,13 +61,10 @@ private:
 	vector<glm::vec3> m_leftOffsetPoints;	// Left offset curve points
 	vector<glm::vec3> m_rightOffsetPoints;	// Right offset curve points
 	CVertexBufferObjectIndexed m_vboCentreLine;
-	CVertexBufferObjectIndexed m_vboLeftOffsetLine;
-	CVertexBufferObjectIndexed m_vboRightOffsetLine;
 	CVertexBufferObjectIndexed m_vboTrack;
 	vector<CVertex> vertices;
 
 
 	unsigned int m_vertexCountCentre;
-	unsigned int m_vertexLeft;
-	unsigned int m_vertexRight;// Number of vertices in the track VBO
+	unsigned int m_vertexTrack;
 };

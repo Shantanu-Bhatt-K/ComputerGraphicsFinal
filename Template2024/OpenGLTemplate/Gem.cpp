@@ -277,16 +277,16 @@ void CGem::CreateGrouped(string a_sDirectory, string a_sFilename, int sides, flo
 
 
 	// topmost point
-	glm::vec3 top_point = glm::vec3(0, height, 0);
+	glm::vec3 top_point = glm::vec3(0, height/2, 0);
 
 	//lowest point
-	glm::vec3 bottom_point = glm::vec3(0, 0, 0);
+	glm::vec3 bottom_point = glm::vec3(0, -height/2, 0);
 
 
 	// first loop
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), 5 * height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), 2 * height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
 		upper_loop.push_back(tempVector);
 	}
 
@@ -299,7 +299,7 @@ void CGem::CreateGrouped(string a_sDirectory, string a_sFilename, int sides, flo
 	glm::vec2 tex_center(tex_side + tex_radius, tex_side + tex_radius);
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), -2*height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
 		lower_loop.push_back(tempVector);
 	}
 	

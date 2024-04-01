@@ -57,13 +57,12 @@ Game::Game()
 	m_pShaderPrograms = NULL;
 	m_pPlanarTerrain = NULL;
 	m_pFtFont = NULL;
-	m_pBarrelMesh = NULL;
+	m_pCar = NULL;
 	m_pHorseMesh = NULL;
 	m_pSphere = NULL;
 	m_pHighResolutionTimer = NULL;
 	m_pAudio = NULL;
 	m_pCatmullRom = NULL;
-	m_player = NULL;
 	m_dt = 0.0;
 	m_framesPerSecond = 0;
 	m_frameCount = 0;
@@ -78,12 +77,11 @@ Game::~Game()
 	delete m_pSkybox;
 	delete m_pPlanarTerrain;
 	delete m_pFtFont;
-	delete m_pBarrelMesh;
+	delete m_pCar;
 	delete m_pHorseMesh;
 	delete m_pSphere;
 	delete m_pAudio;
 	delete m_pCatmullRom;
-	delete m_player;
 	if (m_pShaderPrograms != NULL) {
 		for (unsigned int i = 0; i < m_pShaderPrograms->size(); i++)
 			delete (*m_pShaderPrograms)[i];
@@ -107,12 +105,11 @@ void Game::Initialise()
 	m_pShaderPrograms = new vector <CShaderProgram *>;
 	m_pPlanarTerrain = new HDPlane;
 	m_pFtFont = new CFreeTypeFont;
-	m_pBarrelMesh = new COpenAssetImportMesh;
+	m_pCar = new COpenAssetImportMesh;
 	m_pHorseMesh = new COpenAssetImportMesh;
 	m_pSphere = new CSphere;
 	m_pAudio = new CAudio;
 	m_pCatmullRom = new CCatmullRom;
-	m_player = new CGem;
 	RECT dimensions = m_gameWindow.GetDimensions();
 
 	int width = dimensions.right - dimensions.left;
@@ -174,20 +171,20 @@ void Game::Initialise()
 	m_pSkybox->Create(2500.0f);
 	
 	// Create the planar terrain
-	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 500); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 200); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
 	m_pFtFont->LoadSystemFont("arial.ttf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
 
 	// Load some meshes in OBJ format
-	m_pBarrelMesh->Load("resources\\models\\Barrel\\Barrel02.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
+	m_pCar->Load("resources\\models\\Car\\Car.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
 	m_pHorseMesh->Load("resources\\models\\Horse\\Horse2.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
 
 	//Create player body
-	m_player->CreateInterleaved("resources\\textures\\", "Player.jpg", 8, 1.f, 0.3f);
+	
 	// Create a sphere
 	m_pSphere->Create("resources\\textures\\", "dirtpile01.jpg", 25, 25);  // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	
 	// Initialise audio and play background music
 	m_pAudio->Initialise();
@@ -196,6 +193,7 @@ void Game::Initialise()
 	
 	//Create CatmullCentreLine
 	m_pCatmullRom->CreateTrack();
+	glEnable(GL_MULTISAMPLE);
 	
 }
 
@@ -240,8 +238,8 @@ void Game::Render()
 	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
 	pMainProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
 	pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
-	pMainProgram->SetUniform("material1.Md", glm::vec3(0.0f));	// Diffuse material reflectance
-	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.0f));	// Specular material reflectance
+	pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
+	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.2f));	// Specular material reflectance
 	pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
 		
 
@@ -281,27 +279,18 @@ void Game::Render()
 
 
 	
-	// Render the barrel 
-	modelViewMatrixStack.Push();
-		modelViewMatrixStack.Translate(glm::vec3(100.0f, 0.0f, 0.0f));
-		modelViewMatrixStack.Scale(5.0f);
-		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
-		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
-		m_pBarrelMesh->Render();
-	modelViewMatrixStack.Pop();
+	
 	
 
 	// Render the player
 	modelViewMatrixStack.Push();
 		modelViewMatrixStack.Translate(playerPos);
-		modelViewMatrixStack.Rotate(normal, 80.f);
 		modelViewMatrixStack *= playerOrientation;
-		modelViewMatrixStack.Scale(2.f);
-		
+		modelViewMatrixStack.Scale(0.3f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
 		pMainProgram->SetUniform("bUseTexture", true);
-		m_player->Render();
+		m_pCar->Render();
 	modelViewMatrixStack.Pop();
 
 	//render centre line
@@ -324,7 +313,7 @@ void Game::Render()
 	pWaterProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
 	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
 	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
-	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.0f,0.0f));	// Ambient material reflectance
+	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.0f,0.1f));	// Ambient material reflectance
 	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.2f, 0.3f, 0.2f));	// Diffuse material reflectance
 	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.4f, 0.8f, 1.f));	// Specular material reflectance
 	pWaterProgram->SetUniform("material1.shininess", 200.0f);
@@ -354,46 +343,23 @@ void Game::Update()
 	
 	timer += m_dt;
 
-	m_accel = 0;
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
-	
+	m_accel_y = 0;
 	
 
-	m_pCatmullRom->Sample(m_currentDist, curp,up,forward);
+	m_pCatmullRom->Sample(m_currentDist_y, curp,up,forward);
 	forward = glm::normalize(forward);
 	up = glm::normalize(up);
 	normal = glm::cross(forward, up);
 	
 	normal = glm::normalize(normal);
 	up = glm::cross(normal, forward);
-	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
-		m_accel += accel;
-	}
-
-	if (GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80) {
-		m_accel -= accel;
-
-	}
-	m_accel += accel * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
-		m_velocity += m_accel * m_dt;
-	if (m_velocity > 0)
-	{
-		m_velocity -= 0.01f * pow(m_velocity, 2);
-
-	}
-	else
-	{
-		m_velocity += 0.01f * pow(m_velocity, 2);
-	}
-	m_currentDist += m_velocity * m_dt;
-	if (m_currentDist <= 0)
-	{
-		
-		m_currentDist =m_pCatmullRom->totalDist()-m_currentDist;
-	}
-	//m_pCamera->Update(m_dt);
-	m_pCamera->Set(curp +up*(10.f - 5.f * m_velocity) -(forward*(10.f+50.f*m_velocity)), curp +forward * 10.f, up);
-	playerPos = curp;
+	Input();
+	
+	Physics();
+	UpdateCamera();
+	
+	playerPos = curp-up*0.9f+ normal * m_currentDist_x;
 
 	playerOrientation = glm::mat4(glm::mat3(forward, up,normal));
 	m_pAudio->Update();
@@ -409,11 +375,12 @@ void Game::DisplayFrameRate()
 
 	RECT dimensions = m_gameWindow.GetDimensions();
 	int height = dimensions.bottom - dimensions.top;
+	int width = dimensions.right - dimensions.left;
 
 	// Increase the elapsed time and frame counter
 	m_elapsedTime += m_dt;
 	m_frameCount++;
-
+	int displayVel = m_velocity_y * 800;
 	// Now we want to subtract the current time by the last time that was stored
 	// to see if the time elapsed has been over a second, which means we found our FPS.
 	if (m_elapsedTime > 1000)
@@ -432,8 +399,10 @@ void Game::DisplayFrameRate()
 		fontProgram->SetUniform("matrices.modelViewMatrix", glm::mat4(1));
 		fontProgram->SetUniform("matrices.projMatrix", m_pCamera->GetOrthographicProjectionMatrix());
 		fontProgram->SetUniform("vColour", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		m_pFtFont->Render(20, height - 20, 20, "Speed: %f", m_velocity);
-		m_pFtFont->Render(20, height - 50, 20, "Acceleration: %f", m_accel);
+		
+		m_pFtFont->Render(20, height - 20, 20, "Speed: %d",displayVel);
+		
+		m_pFtFont->Render(width-100, height - 50, 20, "FPS%d", m_framesPerSecond);
 	}
 }
 
@@ -460,6 +429,82 @@ void Game::GameLoop()
 
 }
 
+void Game::Input()
+{
+	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
+		m_accel_y += accel;
+	}
+
+	if (GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80) {
+		m_accel_y -= accel;
+
+	}
+	if (GetKeyState(VK_RIGHT) & 0x80 || GetKeyState('D') & 0x80) {
+		m_currentDist_x += 0.01 * m_dt;
+
+	}
+	if (GetKeyState(VK_LEFT) & 0x80 || GetKeyState('A') & 0x80) {
+		m_currentDist_x -= 0.01 * m_dt;
+
+	}
+
+	//Camera view input
+
+	if (GetKeyState('1') & 0x80)
+	{
+		cView = top;
+	}
+	else if (GetKeyState('2') & 0x80)
+	{
+		cView = side;
+	}
+	else if (GetKeyState('3') & 0x80)
+	{
+		cView = third;
+	}
+}
+
+void Game::Physics()
+{
+	m_accel_y += accel * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
+	m_velocity_y += m_accel_y * m_dt;
+	if (m_velocity_y > 0)
+	{
+		m_velocity_y -= 0.008f * m_dt * pow(m_velocity_y, 2);
+
+	}
+	else
+	{
+		m_velocity_y += 0.008f * m_dt * pow(m_velocity_y, 2);
+	}
+
+	m_currentDist_y += m_velocity_y * m_dt;
+
+	if (m_currentDist_y <= 0)
+	{
+
+		m_currentDist_y = m_pCatmullRom->totalDist() - m_currentDist_y;
+	}
+}
+
+void Game::UpdateCamera()
+{
+
+	switch (cView)
+	{
+	case third:
+		m_pCamera->Set(curp + up * 10.f - (forward * (10.f + 40.f * m_velocity_y)), curp + forward * 10.f, up);
+		break;
+	case top:
+		m_pCamera->Set(curp + up * (10.f+40*m_velocity_y), curp, forward);
+		break;
+	case side:
+		m_pCamera->Set(curp - normal * (20.f + 40.f * m_velocity_y) +up*10.f, curp, up);
+	}
+	
+
+	
+}
 
 WPARAM Game::Execute() 
 {
@@ -537,10 +582,10 @@ LRESULT Game::ProcessEvents(HWND window,UINT message, WPARAM w_param, LPARAM l_p
 			PostQuitMessage(0);
 			break;
 		case '1':
-			m_pAudio->PlayEventSound();
+			//m_pAudio->PlayEventSound();
 			break;
 		case VK_F1:
-			m_pAudio->PlayEventSound();
+			//m_pAudio->PlayEventSound();
 			break;
 		}
 		break;
