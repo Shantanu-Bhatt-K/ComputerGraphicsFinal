@@ -38,12 +38,15 @@ private:
 	HDPlane *m_pPlanarTerrain;
 	CFreeTypeFont *m_pFtFont;
 	COpenAssetImportMesh *m_pCar;
-	COpenAssetImportMesh *m_pHorseMesh;
 	CSphere *m_pSphere;
 	CHighResolutionTimer *m_pHighResolutionTimer;
 	CAudio *m_pAudio;
 	CGem* powerup;
 	CCatmullRom* m_pCatmullRom;
+
+	//startLine
+	COpenAssetImportMesh* m_startLine;
+	glm::mat4 startLineTransform;
 
 	// Some other member variables
 	double m_dt;
@@ -52,8 +55,12 @@ private:
 	float timer = 0;
 
 	//player variables
-	float accel = 0.0003f;
+	float m_currentDist_y = 0.f, m_currentDist_x = 0.f;
+	float accel_y = 0.0003f;
 	float m_accel_y, m_velocity_y;
+
+	float accel_x = 0.0001f;
+	float m_accel_x, m_velocity_x;
 
 
 	//camera variables
@@ -61,15 +68,23 @@ private:
 	glm::vec3 cPos;
 	glm::vec3 cViewPoint;
 	
-	float m_currentDist_y = 0.f,m_currentDist_x=0.f;
+	
 	glm::vec3 playerPos;
 	glm::vec3 curp, up,prevforward=glm::vec3(0,0,0), forward, normal;
 	glm::mat4 playerOrientation;
 
 
 	// gems variables
-	glm::mat4 gemPositions[40];
-	int gemCount = 40;
+	glm::mat4 gemPositions[20];
+	int gemCount = 20;
+
+	// game controller variables;
+	int reverseLaps = 0;
+	int highestLaps = 0;
+	int totalLaps = 0;
+	float lapTime = 0;
+	float lowestLapTime= std::numeric_limits<float>::max();
+	bool gameStarted = false;
 
 
 public:

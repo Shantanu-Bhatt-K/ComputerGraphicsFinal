@@ -58,11 +58,11 @@ Game::Game()
 	m_pPlanarTerrain = NULL;
 	m_pFtFont = NULL;
 	m_pCar = NULL;
-	m_pHorseMesh = NULL;
 	m_pSphere = NULL;
 	m_pHighResolutionTimer = NULL;
 	m_pAudio = NULL;
 	m_pCatmullRom = NULL;
+	m_startLine = NULL;
 	powerup = NULL;
 	m_dt = 0.0;
 	m_framesPerSecond = 0;
@@ -79,11 +79,11 @@ Game::~Game()
 	delete m_pPlanarTerrain;
 	delete m_pFtFont;
 	delete m_pCar;
-	delete m_pHorseMesh;
 	delete m_pSphere;
 	delete m_pAudio;
 	delete m_pCatmullRom;
 	delete powerup;
+	delete m_startLine;
 	if (m_pShaderPrograms != NULL) {
 		for (unsigned int i = 0; i < m_pShaderPrograms->size(); i++)
 			delete (*m_pShaderPrograms)[i];
@@ -108,11 +108,11 @@ void Game::Initialise()
 	m_pPlanarTerrain = new HDPlane;
 	m_pFtFont = new CFreeTypeFont;
 	m_pCar = new COpenAssetImportMesh;
-	m_pHorseMesh = new COpenAssetImportMesh;
 	m_pSphere = new CSphere;
 	m_pAudio = new CAudio;
 	m_pCatmullRom = new CCatmullRom;
 	powerup = new CGem;
+	m_startLine = new COpenAssetImportMesh;
 	RECT dimensions = m_gameWindow.GetDimensions();
 
 	int width = dimensions.right - dimensions.left;
@@ -182,8 +182,8 @@ void Game::Initialise()
 	// Load some meshes in OBJ format
 	//Create player body
 	m_pCar->Load("resources\\models\\Car\\Car.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
-	m_pHorseMesh->Load("resources\\models\\Horse\\Horse2.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
-
+	m_startLine->Load("resources\\models\\StartPost\\StartLine.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
+	
 	//CreatePowerUp
 	powerup->CreateInterleaved("resources\\textures\\", "dirtpile01.jpg", 8, 3.f, 0.7f);
 	
@@ -198,7 +198,7 @@ void Game::Initialise()
 	
 	//Create CatmullCentreLine
 	m_pCatmullRom->CreateTrack();
-	for (int i = 0; i < gemCount; i++)
+	for (int i = 1; i < gemCount; i++)
 	{
 		float dist = m_pCatmullRom->totalDist() * i / gemCount;
 		glm::vec3 _forward, _up, _pos;
@@ -206,7 +206,7 @@ void Game::Initialise()
 		glm::vec3 _normal = glm::normalize(glm::cross(_forward, _up));
 		_up = glm::normalize(glm::cross(_normal, _forward));
 		_forward = glm::normalize(_forward);
-		glm::vec3 gemPos = _pos+5*sin(dist)*_normal;
+		glm::vec3 gemPos = _pos+7*sin(0.05f*dist)*_normal;
 		glm::mat4 transformMat = glm::mat4(1.0f);
 		transformMat = glm::translate(transformMat, gemPos);
 		transformMat*= glm::mat4(glm::mat3(_forward, _up, _normal));
@@ -214,6 +214,14 @@ void Game::Initialise()
 		gemPositions[i]=transformMat;
 
 	}
+	glm::vec3 _forward, _up, _pos;
+	m_pCatmullRom->Sample(0, _pos, _up, _forward);
+	glm::vec3 _normal = glm::normalize(glm::cross(_forward, _up));
+	_up = glm::normalize(glm::cross(_normal, _forward));
+	_forward = glm::normalize(_forward);
+	startLineTransform = glm::mat4(1.0f);
+	startLineTransform = glm::translate(_pos);
+	startLineTransform*= glm::mat4(glm::mat3(_forward, _up, _normal));
 	glEnable(GL_MULTISAMPLE);
 	
 }
@@ -278,6 +286,8 @@ void Game::Render()
 		pMainProgram->SetUniform("renderSkybox", false);
 	modelViewMatrixStack.Pop();
 
+	
+
 
 	
 
@@ -291,14 +301,6 @@ void Game::Render()
 
 	pMainProgram->SetUniform("isInstanced", false);
 	// Render the horse 
-	modelViewMatrixStack.Push();
-		modelViewMatrixStack.Translate(glm::vec3(0.0f,0.0f, 0.0f));
-		modelViewMatrixStack.Rotate(glm::vec3(0.0f, 1.0f, 0.0f), 180.0f);
-		modelViewMatrixStack.Scale(2.5f);
-		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
-		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
-		m_pHorseMesh->Render();
-	modelViewMatrixStack.Pop();
 
 
 	
@@ -308,6 +310,7 @@ void Game::Render()
 	// Render the player
 	modelViewMatrixStack.Push();
 		modelViewMatrixStack.Translate(playerPos);
+		modelViewMatrixStack.Rotate(up,-10*m_velocity_x);
 		modelViewMatrixStack *= playerOrientation;
 		modelViewMatrixStack.Scale(0.3f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
@@ -315,7 +318,15 @@ void Game::Render()
 		pMainProgram->SetUniform("bUseTexture", true);
 		m_pCar->Render();
 	modelViewMatrixStack.Pop();
-
+	//render start Line
+	modelViewMatrixStack.Push();
+	
+		modelViewMatrixStack *= startLineTransform;
+		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
+		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top())); 
+			m_startLine->Render();
+		modelViewMatrixStack.Pop();
+	
 	//render centre line
 	modelViewMatrixStack.Push();
 	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -330,7 +341,7 @@ void Game::Render()
 	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
 
 	pMainProgram->SetUniform("isInstanced", true);
-	for (unsigned int i = 0; i < 40; i++)
+	for (unsigned int i = 0; i < gemCount; i++)
 	{
 		pMainProgram->SetUniform("instanceLocs[" + std::to_string(i) + "]", gemPositions[i]);
 	}
@@ -383,7 +394,6 @@ void Game::Update()
 	timer += m_dt;
 
 	// Update the camera using the amount of time that has elapsed to avoid framerate dependent motion
-	m_accel_y = 0;
 	
 
 	m_pCatmullRom->Sample(m_currentDist_y, curp,up,forward);
@@ -393,11 +403,29 @@ void Game::Update()
 	
 	normal = glm::normalize(normal);
 	up = glm::cross(normal, forward);
-	Input();
-	
-	Physics();
+	if(gameStarted)
+	{
+		Input();
+		
+		Physics();
+		lapTime += m_dt;
+		
+	}
+	else
+		if(GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
+			gameStarted = true;
+		}
 	UpdateCamera();
-	
+	totalLaps = m_pCatmullRom->CurrentLap(m_currentDist_y) + reverseLaps;
+	if (totalLaps > highestLaps)
+	{
+		if (lowestLapTime > lapTime)
+		{
+			lowestLapTime = lapTime;
+		}
+		highestLaps = totalLaps;
+		lapTime = 0;
+	}
 	playerPos = curp-up*0.9f+ normal * m_currentDist_x;
 
 	playerOrientation = glm::mat4(glm::mat3(forward, up,normal));
@@ -440,6 +468,10 @@ void Game::DisplayFrameRate()
 		fontProgram->SetUniform("vColour", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		
 		m_pFtFont->Render(20, height - 20, 20, "Speed: %d",displayVel);
+		m_pFtFont->Render(20, height - 50, 20, "LAPS: %d",highestLaps);
+		m_pFtFont->Render(20, height - 80, 20, "Current Lap: %f seconds", lapTime / 1000);
+		if(highestLaps!=0)
+		m_pFtFont->Render(20, height - 110, 20, "Fastest Lap: %f seconds",lowestLapTime/1000);
 		
 		m_pFtFont->Render(width-100, height - 50, 20, "FPS%d", m_framesPerSecond);
 	}
@@ -470,20 +502,22 @@ void Game::GameLoop()
 
 void Game::Input()
 {
+	m_accel_y = 0;
+	m_accel_x = 0;
 	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
-		m_accel_y += accel;
+		m_accel_y += accel_y;
 	}
 
 	if (GetKeyState(VK_DOWN) & 0x80 || GetKeyState('S') & 0x80) {
-		m_accel_y -= accel;
+		m_accel_y -= accel_y;
 
 	}
 	if (GetKeyState(VK_RIGHT) & 0x80 || GetKeyState('D') & 0x80) {
-		m_currentDist_x += 0.01 * m_dt;
+		m_accel_x += accel_x;
 
 	}
 	if (GetKeyState(VK_LEFT) & 0x80 || GetKeyState('A') & 0x80) {
-		m_currentDist_x -= 0.01 * m_dt;
+		m_accel_x -= accel_x;
 
 	}
 
@@ -505,7 +539,7 @@ void Game::Input()
 
 void Game::Physics()
 {
-	m_accel_y += accel * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
+	m_accel_y += accel_y * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
 	m_velocity_y += m_accel_y * m_dt;
 	if (m_velocity_y > 0)
 	{
@@ -523,6 +557,33 @@ void Game::Physics()
 	{
 
 		m_currentDist_y = m_pCatmullRom->totalDist() - m_currentDist_y;
+		reverseLaps--;
+	}
+
+	m_accel_x += 0.5f*accel_x * glm::dot(glm::normalize( normal), glm::vec3(0, -1, 0));
+	m_velocity_x += m_accel_x * m_dt;
+	if (m_velocity_x > 0)
+	{
+		m_velocity_x -= 0.1f * m_dt * pow(m_velocity_x, 2);
+
+	}
+	else
+	{
+		m_velocity_x += 0.1f * m_dt * pow(m_velocity_x, 2);
+	}
+
+	m_currentDist_x += m_velocity_x * m_dt;
+	if (m_currentDist_x <= -8.f)
+	{
+		m_currentDist_x = -8.f;
+		m_velocity_x *= -0.2;
+		m_velocity_y *= 0.8f;
+	}
+	else if (m_currentDist_x >= 8.f)
+	{
+		m_currentDist_x = 8.f;
+		m_velocity_x *= -0.2;
+		m_velocity_y *= 0.8f;
 	}
 }
 

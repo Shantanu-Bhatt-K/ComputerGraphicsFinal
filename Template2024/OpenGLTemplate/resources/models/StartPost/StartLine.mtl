@@ -1,0 +1,32 @@
+# Blender 4.0.2 MTL File: 'None'
+# www.blender.org
+
+newmtl Finish
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Finish.png
+map_d Finish.png
+
+newmtl Start
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Start.png
+map_d Start.png
+
+newmtl Steal
+Ns 113.140526
+Ka 0.705455 0.705455 0.705455
+Kd 0.485113 0.453828 0.440342
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3

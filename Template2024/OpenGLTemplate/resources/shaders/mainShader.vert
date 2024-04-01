@@ -30,7 +30,7 @@ struct MaterialInfo
 uniform LightInfo light1; 
 uniform MaterialInfo material1; 
 uniform bool isInstanced;
-uniform mat4 instanceLocs[40];
+uniform mat4 instanceLocs[20];
 uniform int instanceCount;
 
 // Layout of vertex attributes in VBO
