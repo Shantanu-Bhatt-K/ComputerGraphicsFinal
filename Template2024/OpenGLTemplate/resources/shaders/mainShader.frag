@@ -15,7 +15,7 @@ in vec3 worldPosition;
 void main()
 {
 	vec3 fogColour=  vec3(0.75f);
-	float rho=0.003;
+	float rho=0.03;
 		float d = length(eyePos.xyz);
 		float w = exp(-pow(rho*d,2))+pow(smoothstep(0,1000,worldPosition.y),1);
 	if (renderSkybox) {

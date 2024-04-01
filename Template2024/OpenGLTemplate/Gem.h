@@ -12,6 +12,7 @@ public:
 	void CreateInterleaved(string directory, string front, int sides, float height, float thickness);
 	void CreateGrouped(string directory, string front, int sides, float height, float thickness);
 	void Render();
+	void RenderInstanced(int n);
 	void Release();
 private:
 	UINT m_vao;

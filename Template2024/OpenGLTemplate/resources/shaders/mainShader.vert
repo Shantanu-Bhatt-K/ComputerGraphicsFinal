@@ -29,6 +29,9 @@ struct MaterialInfo
 // Lights and materials passed in as uniform variables from client programme
 uniform LightInfo light1; 
 uniform MaterialInfo material1; 
+uniform bool isInstanced;
+uniform mat4 instanceLocs[40];
+uniform int instanceCount;
 
 // Layout of vertex attributes in VBO
 layout (location = 0) in vec3 inPosition;
@@ -68,9 +71,18 @@ void main()
 {	
 
 // Save the world position for rendering the skybox
+	
 	worldPosition = inPosition;
 
 	// Transform the vertex spatial position using 
+	if(isInstanced)
+	{
+	int i=gl_InstanceID;
+	mat4 shift = instanceLocs[i];
+
+	gl_Position = matrices.projMatrix * matrices.modelViewMatrix * shift*vec4(inPosition, 1.0f);
+	}
+	else
 	gl_Position = matrices.projMatrix * matrices.modelViewMatrix * vec4(inPosition, 1.0f);
 	
 	// Get the vertex normal and vertex position in eye coordinates

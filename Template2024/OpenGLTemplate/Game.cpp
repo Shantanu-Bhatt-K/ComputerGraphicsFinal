@@ -63,6 +63,7 @@ Game::Game()
 	m_pHighResolutionTimer = NULL;
 	m_pAudio = NULL;
 	m_pCatmullRom = NULL;
+	powerup = NULL;
 	m_dt = 0.0;
 	m_framesPerSecond = 0;
 	m_frameCount = 0;
@@ -82,6 +83,7 @@ Game::~Game()
 	delete m_pSphere;
 	delete m_pAudio;
 	delete m_pCatmullRom;
+	delete powerup;
 	if (m_pShaderPrograms != NULL) {
 		for (unsigned int i = 0; i < m_pShaderPrograms->size(); i++)
 			delete (*m_pShaderPrograms)[i];
@@ -110,6 +112,7 @@ void Game::Initialise()
 	m_pSphere = new CSphere;
 	m_pAudio = new CAudio;
 	m_pCatmullRom = new CCatmullRom;
+	powerup = new CGem;
 	RECT dimensions = m_gameWindow.GetDimensions();
 
 	int width = dimensions.right - dimensions.left;
@@ -177,10 +180,12 @@ void Game::Initialise()
 	m_pFtFont->SetShaderProgram(pFontProgram);
 
 	// Load some meshes in OBJ format
+	//Create player body
 	m_pCar->Load("resources\\models\\Car\\Car.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
 	m_pHorseMesh->Load("resources\\models\\Horse\\Horse2.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
 
-	//Create player body
+	//CreatePowerUp
+	powerup->CreateInterleaved("resources\\textures\\", "dirtpile01.jpg", 8, 3.f, 0.7f);
 	
 	// Create a sphere
 	m_pSphere->Create("resources\\textures\\", "dirtpile01.jpg", 25, 25);  // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
@@ -193,6 +198,22 @@ void Game::Initialise()
 	
 	//Create CatmullCentreLine
 	m_pCatmullRom->CreateTrack();
+	for (int i = 0; i < gemCount; i++)
+	{
+		float dist = m_pCatmullRom->totalDist() * i / gemCount;
+		glm::vec3 _forward, _up, _pos;
+		m_pCatmullRom->Sample(dist, _pos, _up, _forward);
+		glm::vec3 _normal = glm::normalize(glm::cross(_forward, _up));
+		_up = glm::normalize(glm::cross(_normal, _forward));
+		_forward = glm::normalize(_forward);
+		glm::vec3 gemPos = _pos+5*sin(dist)*_normal;
+		glm::mat4 transformMat = glm::mat4(1.0f);
+		transformMat = glm::translate(transformMat, gemPos);
+		transformMat*= glm::mat4(glm::mat3(_forward, _up, _normal));
+
+		gemPositions[i]=transformMat;
+
+	}
 	glEnable(GL_MULTISAMPLE);
 	
 }
@@ -266,7 +287,9 @@ void Game::Render()
 	pMainProgram->SetUniform("material1.Md", glm::vec3(0.5f));	// Diffuse material reflectance
 	pMainProgram->SetUniform("material1.Ms", glm::vec3(1.0f));	// Specular material reflectance	
 
+	
 
+	pMainProgram->SetUniform("isInstanced", false);
 	// Render the horse 
 	modelViewMatrixStack.Push();
 		modelViewMatrixStack.Translate(glm::vec3(0.0f,0.0f, 0.0f));
@@ -303,6 +326,22 @@ void Game::Render()
 	m_pCatmullRom->RenderTrack();
 	modelViewMatrixStack.Pop();
 	
+	modelViewMatrixStack.Push();
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	pMainProgram->SetUniform("isInstanced", true);
+	for (unsigned int i = 0; i < 40; i++)
+	{
+		pMainProgram->SetUniform("instanceLocs[" + std::to_string(i) + "]", gemPositions[i]);
+	}
+	pMainProgram->SetUniform("instancedCount", gemCount);
+	pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
+	pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
+	pMainProgram->SetUniform("bUseTexture", false);
+	powerup->RenderInstanced(gemCount);
+	modelViewMatrixStack.Pop();
+	pMainProgram->SetUniform("isInstanced", false);
+
 	CShaderProgram* pWaterProgram = (*m_pShaderPrograms)[2];
 	pWaterProgram->UseProgram();
 	pWaterProgram->SetUniform("bUseTexture", false);
@@ -501,6 +540,8 @@ void Game::UpdateCamera()
 	case side:
 		m_pCamera->Set(curp - normal * (20.f + 40.f * m_velocity_y) +up*10.f, curp, up);
 	}
+
+	
 	
 
 	

@@ -42,6 +42,7 @@ private:
 	CSphere *m_pSphere;
 	CHighResolutionTimer *m_pHighResolutionTimer;
 	CAudio *m_pAudio;
+	CGem* powerup;
 	CCatmullRom* m_pCatmullRom;
 
 	// Some other member variables
@@ -67,6 +68,8 @@ private:
 
 
 	// gems variables
+	glm::mat4 gemPositions[40];
+	int gemCount = 40;
 
 
 public:

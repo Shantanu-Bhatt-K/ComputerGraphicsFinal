@@ -494,6 +494,12 @@ void CGem::Render()
 	m_texture.Bind();
 	glDrawArrays(GL_TRIANGLES,0, m_numtriangles * 3 );
 }
+void CGem::RenderInstanced(int n)
+{
+	glBindVertexArray(m_vao);
+	m_texture.Bind();
+	glDrawArraysInstanced(GL_TRIANGLES, 0, m_numtriangles * 3,n);
+}
 
 
 void CGem :: Release()
