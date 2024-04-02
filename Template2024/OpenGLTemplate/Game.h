@@ -65,7 +65,7 @@ private:
 
 	float speedUpTimer = 0;
 	bool isSpeedingUp;
-	float speedUpTime = 0.1f;
+	float speedUpTime = 0.15f;
 
 
 

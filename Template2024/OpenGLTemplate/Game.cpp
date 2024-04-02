@@ -570,7 +570,7 @@ void Game::Physics()
 	if (isSpeedingUp)
 	{
 		speedUpTimer += m_dt / 1000;
-		m_accel_y += speedUpTimer / speedUpTime * 0.005f;
+		m_accel_y += speedUpTimer / speedUpTime * 0.002f;
 		if (speedUpTimer >= speedUpTime)
 		{
 			isSpeedingUp = false;
