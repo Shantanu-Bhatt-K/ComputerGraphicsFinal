@@ -37,13 +37,13 @@ private:
 	vector <CShaderProgram *> *m_pShaderPrograms;
 	HDPlane *m_pPlanarTerrain;
 	CFreeTypeFont *m_pFtFont;
-	COpenAssetImportMesh *m_pCar;
+	
 	CSphere *m_pSphere;
 	CHighResolutionTimer *m_pHighResolutionTimer;
 	CAudio *m_pAudio;
 	CGem* powerup;
 	CCatmullRom* m_pCatmullRom;
-
+	COpenAssetImportMesh* m_pBlimp;
 	//startLine
 	COpenAssetImportMesh* m_startLine;
 	glm::mat4 startLineTransform;
@@ -55,12 +55,18 @@ private:
 	float timer = 0;
 
 	//player variables
+	COpenAssetImportMesh* m_pCar;
 	float m_currentDist_y = 0.f, m_currentDist_x = 0.f;
 	float accel_y = 0.0003f;
 	float m_accel_y, m_velocity_y;
 
 	float accel_x = 0.0001f;
 	float m_accel_x, m_velocity_x;
+
+	float speedUpTimer = 0;
+	bool isSpeedingUp;
+	float speedUpTime = 0.1f;
+
 
 
 	//camera variables
@@ -77,6 +83,8 @@ private:
 	// gems variables
 	glm::mat4 gemPositions[20];
 	int gemCount = 20;
+	std::vector<glm::mat4> activePositions;
+	
 
 	// game controller variables;
 	int reverseLaps = 0;
@@ -102,6 +110,7 @@ private:
 	void Input();
 	void Physics();
 	void UpdateCamera();
+	void Collisions();
 
 	GameWindow m_gameWindow;
 	HINSTANCE m_hInstance;

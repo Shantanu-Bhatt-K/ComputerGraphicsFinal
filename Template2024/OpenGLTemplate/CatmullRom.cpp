@@ -551,11 +551,11 @@ void CCatmullRom::CreateTrack()
 
 		cv0.position = lp3;
 		cv0.normal = binorm0;
-		cv0.texture= glm::vec2(0.f, i * tiling / m_leftOffsetPoints.size());
+		cv0.texture= glm::vec2(0.f, i * tiling/ m_leftOffsetPoints.size());
 
 		cv1.position = rp2;
 		cv1.normal = binorm0;
-		cv1.texture = glm::vec2(1.f, i * tiling / m_leftOffsetPoints.size());
+		cv1.texture = glm::vec2(1.f, i * tiling/ m_leftOffsetPoints.size());
 
 		cv2.position = lp7;
 		cv2.normal = binorm1;
@@ -563,7 +563,7 @@ void CCatmullRom::CreateTrack()
 
 		cv3.position = rp6;
 		cv3.normal = binorm1;
-		cv3.texture = glm::vec2(1.f, (i + 1) * tiling / m_leftOffsetPoints.size());
+		cv3.texture = glm::vec2(1.f, (i + 1) * tiling/ m_leftOffsetPoints.size());
 
 		m_vboTrack.AddVertexData(&cv0, sizeof(CVertex));
 		m_vboTrack.AddVertexData(&cv1, sizeof(CVertex));

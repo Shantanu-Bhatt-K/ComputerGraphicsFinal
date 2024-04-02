@@ -58,6 +58,7 @@ Game::Game()
 	m_pPlanarTerrain = NULL;
 	m_pFtFont = NULL;
 	m_pCar = NULL;
+	m_pBlimp = NULL;
 	m_pSphere = NULL;
 	m_pHighResolutionTimer = NULL;
 	m_pAudio = NULL;
@@ -84,6 +85,7 @@ Game::~Game()
 	delete m_pCatmullRom;
 	delete powerup;
 	delete m_startLine;
+	delete m_pBlimp;
 	if (m_pShaderPrograms != NULL) {
 		for (unsigned int i = 0; i < m_pShaderPrograms->size(); i++)
 			delete (*m_pShaderPrograms)[i];
@@ -113,6 +115,7 @@ void Game::Initialise()
 	m_pCatmullRom = new CCatmullRom;
 	powerup = new CGem;
 	m_startLine = new COpenAssetImportMesh;
+	m_pBlimp = new COpenAssetImportMesh;
 	RECT dimensions = m_gameWindow.GetDimensions();
 
 	int width = dimensions.right - dimensions.left;
@@ -189,6 +192,8 @@ void Game::Initialise()
 	
 	// Create a sphere
 	m_pSphere->Create("resources\\textures\\", "dirtpile01.jpg", 25, 25);  // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	
+	m_pBlimp->Load("resources\\models\\Blimp\\Blimp.obj");
 	//glEnable(GL_CULL_FACE);
 	
 	// Initialise audio and play background music
@@ -198,9 +203,9 @@ void Game::Initialise()
 	
 	//Create CatmullCentreLine
 	m_pCatmullRom->CreateTrack();
-	for (int i = 1; i < gemCount; i++)
+	for (int i = 1; i < gemCount+1; i++)
 	{
-		float dist = m_pCatmullRom->totalDist() * i / gemCount;
+		float dist = m_pCatmullRom->totalDist() * (i) / (gemCount+1);
 		glm::vec3 _forward, _up, _pos;
 		m_pCatmullRom->Sample(dist, _pos, _up, _forward);
 		glm::vec3 _normal = glm::normalize(glm::cross(_forward, _up));
@@ -210,8 +215,8 @@ void Game::Initialise()
 		glm::mat4 transformMat = glm::mat4(1.0f);
 		transformMat = glm::translate(transformMat, gemPos);
 		transformMat*= glm::mat4(glm::mat3(_forward, _up, _normal));
-
-		gemPositions[i]=transformMat;
+		gemPositions[i-1]=transformMat;
+		activePositions.push_back(transformMat);
 
 	}
 	glm::vec3 _forward, _up, _pos;
@@ -268,7 +273,7 @@ void Game::Render()
 	pMainProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
 	pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
 	pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
-	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.2f));	// Specular material reflectance
+	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
 	pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
 		
 
@@ -318,6 +323,16 @@ void Game::Render()
 		pMainProgram->SetUniform("bUseTexture", true);
 		m_pCar->Render();
 	modelViewMatrixStack.Pop();
+
+	//render the blimp
+	modelViewMatrixStack.Push();
+	modelViewMatrixStack.Translate(glm::vec3(-50));
+	modelViewMatrixStack.Scale(2.f);
+	pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
+	pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
+	pMainProgram->SetUniform("bUseTexture", true);
+	m_pBlimp->Render();
+	modelViewMatrixStack.Pop();
 	//render start Line
 	modelViewMatrixStack.Push();
 	
@@ -327,7 +342,7 @@ void Game::Render()
 			m_startLine->Render();
 		modelViewMatrixStack.Pop();
 	
-	//render centre line
+	//render track line
 	modelViewMatrixStack.Push();
 	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
 	pMainProgram->SetUniform("bUseTexture", true);
@@ -343,7 +358,8 @@ void Game::Render()
 	pMainProgram->SetUniform("isInstanced", true);
 	for (unsigned int i = 0; i < gemCount; i++)
 	{
-		pMainProgram->SetUniform("instanceLocs[" + std::to_string(i) + "]", gemPositions[i]);
+		pMainProgram->SetUniform("instanceLocs[" + std::to_string(i) + "]", activePositions[i]);
+#
 	}
 	pMainProgram->SetUniform("instancedCount", gemCount);
 	pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
@@ -416,6 +432,8 @@ void Game::Update()
 			gameStarted = true;
 		}
 	UpdateCamera();
+	//m_pCamera->Update(m_dt);
+	Collisions();
 	totalLaps = m_pCatmullRom->CurrentLap(m_currentDist_y) + reverseLaps;
 	if (totalLaps > highestLaps)
 	{
@@ -424,6 +442,13 @@ void Game::Update()
 			lowestLapTime = lapTime;
 		}
 		highestLaps = totalLaps;
+		activePositions.clear();
+		gemCount = 20;
+		for(int i = 0; i < gemCount; i++)
+		{
+			activePositions.push_back(gemPositions[i]);
+		}
+		
 		lapTime = 0;
 	}
 	playerPos = curp-up*0.9f+ normal * m_currentDist_x;
@@ -469,7 +494,7 @@ void Game::DisplayFrameRate()
 		
 		m_pFtFont->Render(20, height - 20, 20, "Speed: %d",displayVel);
 		m_pFtFont->Render(20, height - 50, 20, "LAPS: %d",highestLaps);
-		m_pFtFont->Render(20, height - 80, 20, "Current Lap: %f seconds", lapTime / 1000);
+		m_pFtFont->Render(20, height - 80, 20, "Current Lap: %g seconds", lapTime / 1000);
 		if(highestLaps!=0)
 		m_pFtFont->Render(20, height - 110, 20, "Fastest Lap: %f seconds",lowestLapTime/1000);
 		
@@ -502,6 +527,8 @@ void Game::GameLoop()
 
 void Game::Input()
 {
+	
+		
 	m_accel_y = 0;
 	m_accel_x = 0;
 	if (GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
@@ -520,6 +547,7 @@ void Game::Input()
 		m_accel_x -= accel_x;
 
 	}
+	
 
 	//Camera view input
 
@@ -539,6 +567,15 @@ void Game::Input()
 
 void Game::Physics()
 {
+	if (isSpeedingUp)
+	{
+		speedUpTimer += m_dt / 1000;
+		m_accel_y += speedUpTimer / speedUpTime * 0.005f;
+		if (speedUpTimer >= speedUpTime)
+		{
+			isSpeedingUp = false;
+		}
+	}
 	m_accel_y += accel_y * glm::dot(glm::normalize(forward), glm::vec3(0, -1, 0));
 	m_velocity_y += m_accel_y * m_dt;
 	if (m_velocity_y > 0)
@@ -560,16 +597,16 @@ void Game::Physics()
 		reverseLaps--;
 	}
 
-	m_accel_x += 0.5f*accel_x * glm::dot(glm::normalize( normal), glm::vec3(0, -1, 0));
+	m_accel_x += m_velocity_y*accel_x * glm::dot(glm::normalize( normal), glm::vec3(0, -1, 0));
 	m_velocity_x += m_accel_x * m_dt;
 	if (m_velocity_x > 0)
 	{
-		m_velocity_x -= 0.1f * m_dt * pow(m_velocity_x, 2);
+		m_velocity_x -= 0.3f * m_dt * pow(m_velocity_x, 2);
 
 	}
 	else
 	{
-		m_velocity_x += 0.1f * m_dt * pow(m_velocity_x, 2);
+		m_velocity_x += 0.3f * m_dt * pow(m_velocity_x, 2);
 	}
 
 	m_currentDist_x += m_velocity_x * m_dt;
@@ -585,6 +622,7 @@ void Game::Physics()
 		m_velocity_x *= -0.2;
 		m_velocity_y *= 0.8f;
 	}
+	
 }
 
 void Game::UpdateCamera()
@@ -606,6 +644,21 @@ void Game::UpdateCamera()
 	
 
 	
+}
+
+void Game::Collisions()
+{
+	for (int i = 0; i < gemCount; i++)
+	{
+		if (glm::length(glm::vec3((activePositions[i])[3]) - playerPos) <= 3.f)
+		{
+			speedUpTimer = 0.f;
+			isSpeedingUp = true;
+			activePositions.erase(activePositions.begin() + i);
+			gemCount--;
+		}
+
+	}
 }
 
 WPARAM Game::Execute() 

@@ -31,6 +31,7 @@ uniform LightInfo light1;
 uniform MaterialInfo material1; 
 uniform bool isInstanced;
 uniform mat4 instanceLocs[20];
+uniform bool shouldRender[20];
 uniform int instanceCount;
 
 // Layout of vertex attributes in VBO
@@ -77,10 +78,14 @@ void main()
 	// Transform the vertex spatial position using 
 	if(isInstanced)
 	{
+
 	int i=gl_InstanceID;
+	
 	mat4 shift = instanceLocs[i];
 
 	gl_Position = matrices.projMatrix * matrices.modelViewMatrix * shift*vec4(inPosition, 1.0f);
+	
+	
 	}
 	else
 	gl_Position = matrices.projMatrix * matrices.modelViewMatrix * vec4(inPosition, 1.0f);
