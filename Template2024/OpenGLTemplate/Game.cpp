@@ -268,9 +268,9 @@ void Game::Render()
 	// Set light and materials in main shader program
 	glm::vec4 lightPosition1 = glm::vec4(0, 10, 0, 1); // Position of light source *in world coordinates*
 	pMainProgram->SetUniform("light1.position", viewMatrix*lightPosition1); // Position of light source *in eye coordinates*
-	pMainProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
-	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
-	pMainProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
+	pMainProgram->SetUniform("light1.La", glm::vec3(1.25));		// Ambient colour of light
+	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
+	pMainProgram->SetUniform("light1.Ls", glm::vec3(1.25f));		// Specular colour of light
 	pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
 	pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
 	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
@@ -317,7 +317,7 @@ void Game::Render()
 		modelViewMatrixStack.Translate(playerPos);
 		modelViewMatrixStack.Rotate(up,-10*m_velocity_x);
 		modelViewMatrixStack *= playerOrientation;
-		modelViewMatrixStack.Scale(0.3f);
+		modelViewMatrixStack.Scale(0.8f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 		pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
 		pMainProgram->SetUniform("bUseTexture", true);
@@ -376,9 +376,9 @@ void Game::Render()
 	pWaterProgram->SetUniform("t", timer);
 	glm::vec4 lightPosition = glm::vec4(0,200,200, 1);
 	pWaterProgram->SetUniform("light1.position", viewMatrix* lightPosition); // Position of light source *in eye coordinates*
-	pWaterProgram->SetUniform("light1.La", glm::vec3(1.0f));		// Ambient colour of light
-	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.0f));		// Diffuse colour of light
-	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.0f));		// Specular colour of light
+	pWaterProgram->SetUniform("light1.La", glm::vec3(1.2f));		// Ambient colour of light
+	pWaterProgram->SetUniform("light1.Ld", glm::vec3(1.2f));		// Diffuse colour of light
+	pWaterProgram->SetUniform("light1.Ls", glm::vec3(1.2f));		// Specular colour of light
 	pWaterProgram->SetUniform("material1.Ma", glm::vec3(0.f,0.0f,0.1f));	// Ambient material reflectance
 	pWaterProgram->SetUniform("material1.Md", glm::vec3(0.2f, 0.3f, 0.2f));	// Diffuse material reflectance
 	pWaterProgram->SetUniform("material1.Ms", glm::vec3(0.4f, 0.8f, 1.f));	// Specular material reflectance

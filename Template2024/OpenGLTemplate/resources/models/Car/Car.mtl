@@ -1,12 +1,62 @@
-# Blender 4.0.2 MTL File: 'None'
+# Blender 4.0.2 MTL File: 'car 3.blend'
 # www.blender.org
 
-newmtl TwinMillIII
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+newmtl MI_B_Wheel_003
+Ka 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
-Ni 1.450000
+Ni 1.500000
 d 1.000000
-illum 2
-map_Kd TwinMillIIICar_tex.png
+illum 3
+map_Kd T_B_Wheel_003_BC.png
+map_Ks T_B_Wheel_003_PBR.png
+map_Ns T_B_Wheel_003_PBR.png
+map_refl T_B_WheelImperfections_003_M.png
+map_Bump -bm 2.000000 T_B_Wheel_003_N.png
+
+newmtl MI_Chassis_003
+Ka 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd T_Chassis_003_BC.png
+map_Ks T_Chassis_003_PBR.png
+map_Ns T_Chassis_003_PBR.png
+map_refl T_ChassisImperfections_003_M.png
+map_Bump -bm 2.000000 T_Chassis_003_N.png
+
+newmtl MI_F_Wheel_003
+Ka 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd T_F_Wheel_003_BC.png
+map_Ks T_F_Wheel_003_PBR.png
+map_Ns T_F_Wheel_003_PBR.png
+map_refl T_F_WheelImperfections_003_M.png
+map_Bump -bm 2.000000 T_F_Wheel_003_N.png
+
+newmtl MI_Interior_003
+Ka 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd T_InteriorImperfections_003_M.png
+map_Ks T_Interior_003_PBR.png
+map_Ns T_Interior_003_PBR.png
+map_refl T_InteriorImperfections_003_M.png
+map_Bump -bm 2.000000 T_Interior_003_N.png
+
+newmtl MI_Livery_003
+Ka 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd T_Body_003_BC.png
+map_Ks T_Body_003_PBR.png
+map_Ns T_Body_003_PBR.png
+map_refl T_BodyImperfections_003_M.png
+map_Bump -bm 1.000000 T_Body_003_N.png

@@ -107,8 +107,7 @@
               "ViewState": "AQIAADcAAAAAAAAAAAAiwEMAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-03-26T14:23:27.912Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -118,7 +117,7 @@
               "RelativeDocumentMoniker": "OpenGLTemplate\\Game.cpp",
               "ToolTip": "C:\\Users\\bhatt\\Desktop\\Coursework\\ComputerGraphicsFinal\\Template2024\\OpenGLTemplate\\Game.cpp",
               "RelativeToolTip": "OpenGLTemplate\\Game.cpp",
-              "ViewState": "AQIAAC4CAAAAAAAAAADwvzwCAAAxAAAA",
+              "ViewState": "AQIAAG4BAAAAAAAAAAAAAHwBAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-26T14:23:08.756Z",
               "IsPinned": true,
@@ -170,8 +169,7 @@
               "RelativeToolTip": "OpenGLTemplate\\Gem.cpp",
               "ViewState": "AQIAAEMAAAAAAAAAAAAMwHEAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-30T15:50:34.368Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-30T15:50:34.368Z"
             },
             {
               "$type": "Document",
@@ -183,8 +181,7 @@
               "RelativeToolTip": "OpenGLTemplate\\CatmullRom.cpp",
               "ViewState": "AQIAAN8BAAAAAAAAAAAqwDUCAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-26T14:20:41.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-26T14:20:41.816Z"
             },
             {
               "$type": "Document",
@@ -196,8 +193,7 @@
               "RelativeToolTip": "OpenGLTemplate\\CatmullRom.h",
               "ViewState": "AQIAACEAAAAAAAAAAAAAAB0AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-26T14:32:01.841Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-26T14:32:01.841Z"
             },
             {
               "$type": "Document",
@@ -221,8 +217,7 @@
               "RelativeToolTip": "OpenGLTemplate\\HDPlane.cpp",
               "ViewState": "AQIAABgAAAAAAAAAAAAAADMAAACBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-28T12:17:39.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-28T12:17:39.297Z"
             },
             {
               "$type": "Document",
@@ -294,8 +289,7 @@
               "RelativeToolTip": "OpenGLTemplate\\Sphere.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-26T14:35:36.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-26T14:35:36.042Z"
             },
             {
               "$type": "Document",
@@ -343,8 +337,7 @@
               "RelativeToolTip": "OpenGLTemplate\\Skybox.cpp",
               "ViewState": "AQIAAFEAAAAAAAAAAAAAABIAAABKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-29T00:39:37.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-29T00:39:37.27Z"
             },
             {
               "$type": "Document",
@@ -356,8 +349,7 @@
               "RelativeToolTip": "OpenGLTemplate\\Plane.cpp",
               "ViewState": "AQIAAE4AAAAAAAAAAAAuwGkAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-26T14:29:50.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-26T14:29:50.437Z"
             }
           ]
         }
