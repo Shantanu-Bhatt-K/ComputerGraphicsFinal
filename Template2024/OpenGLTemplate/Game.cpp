@@ -263,8 +263,24 @@ void Game::Render()
 	modelViewMatrixStack.LookAt(m_pCamera->GetPosition(), m_pCamera->GetView(), m_pCamera->GetUpVector());
 	glm::mat4 viewMatrix = modelViewMatrixStack.Top();
 	glm::mat3 viewNormalMatrix = m_pCamera->ComputeNormalMatrix(viewMatrix);
-
+	if (m_velocity_y > 0)
+	{
+		pMainProgram->SetUniform("spotLight1.direction", viewNormalMatrix * glm::rotate(forward, -10 * m_velocity_x, up)); // Position of light source *in eye coordinates*
+		pMainProgram->SetUniform("spotLight2.direction", viewNormalMatrix * glm::rotate(-forward, -10 * m_velocity_x, up)); // Position of light source *in eye coordinates*
 	
+	}
+	else {
+		pMainProgram->SetUniform("spotLight1.direction", viewNormalMatrix * glm::rotate(forward, 10 * m_velocity_x, up));
+		pMainProgram->SetUniform("spotLight2.direction", viewNormalMatrix * glm::rotate(-forward, 10 * m_velocity_x, up));
+	}
+		
+		// Specular colour of light
+	pMainProgram->SetUniform("spotLight1.position", viewMatrix * glm::vec4(playerPos+ glm::rotate(forward, -10 * m_velocity_x, up) *0.1f+up*2.f,1));
+	pMainProgram->SetUniform("spotLight1.exponent",10.f);
+	pMainProgram->SetUniform("spotLight1.cutoff", 90.f);
+	pMainProgram->SetUniform("spotLight2.position", viewMatrix * glm::vec4(playerPos +glm::rotate(forward, -10 * m_velocity_x, up) * 0.1f + up*2.f, 1));
+	pMainProgram->SetUniform("spotLight2.exponent", 10.f);
+	pMainProgram->SetUniform("spotLight2.cutoff", 70.f);
 	// Set light and materials in main shader program
 	if (isDay)
 	{
@@ -277,11 +293,14 @@ void Game::Render()
 		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
 		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
 		pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+		pMainProgram->SetUniform("spotLight1.La", glm::vec3(0));		// Ambient colour of light
+		pMainProgram->SetUniform("spotLight1.Ld", glm::vec3(0));		// Diffuse colour of light
+		pMainProgram->SetUniform("spotLight1.Ls", glm::vec3(0));
 
-		pMainProgram->SetUniform("spotlight1.position", viewMatrix * glm::vec4(playerPos,1)); // Position of light source *in eye coordinates*
-		pMainProgram->SetUniform("spotlight1.La", glm::vec3(1.25));		// Ambient colour of light
-		pMainProgram->SetUniform("spotlight1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
-		pMainProgram->SetUniform("spotlight1.Ls", glm::vec3(1.25f));		// Specular colour of light
+		pMainProgram->SetUniform("spotLight2.La", glm::vec3(0));		// Ambient colour of light
+		pMainProgram->SetUniform("spotLight2.Ld", glm::vec3(0));		// Diffuse colour of light
+		pMainProgram->SetUniform("spotLight2.Ls", glm::vec3(0));
+		
 		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
 		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
 		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
@@ -295,9 +314,15 @@ void Game::Render()
 		pMainProgram->SetUniform("light1.Ld", glm::vec3(0.2f, 0.2f, 0.5f));		// Diffuse colour of light
 		pMainProgram->SetUniform("light1.Ls", glm::vec3(0.2f, 0.2f, 0.5f));		// Specular colour of light
 		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
-		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
+		pMainProgram->SetUniform("material1.Md", glm::vec3(1.f));	// Diffuse material reflectance
 		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
 		pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+		pMainProgram->SetUniform("spotLight1.La", glm::vec3(0.1F));		// Ambient colour of light
+		pMainProgram->SetUniform("spotLight1.Ld", glm::vec3(20.25f));		// Diffuse colour of light
+		pMainProgram->SetUniform("spotLight1.Ls", glm::vec3(20.25f));
+		pMainProgram->SetUniform("spotLight2.La", glm::vec3(0.1f));		// Ambient colour of light
+		pMainProgram->SetUniform("spotLight2.Ld", glm::vec3(1.8f,0,0));		// Diffuse colour of light
+		pMainProgram->SetUniform("spotLight2.Ls", glm::vec3(1.8f,0,0));
 	}
 	
 		
