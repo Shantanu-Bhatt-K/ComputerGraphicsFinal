@@ -25,9 +25,19 @@ struct MaterialInfo
 	vec3 Ms;
 	float shininess;
 };
-
+struct SpotLightInfo
+{
+vec4 position;
+vec3 La;
+vec3 Ld;
+vec3 Ls;
+vec3 direction;
+float exponent;
+float cutoff;
+};
 // Lights and materials passed in as uniform variables from client programme
-uniform LightInfo light1; 
+uniform LightInfo light1;
+uniform SpotLightInfo spotLight1;
 uniform MaterialInfo material1; 
 uniform bool isInstanced;
 uniform mat4 instanceLocs[20];

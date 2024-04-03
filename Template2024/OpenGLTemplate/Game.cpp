@@ -179,7 +179,7 @@ void Game::Initialise()
 	// Create the planar terrain
 	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 200); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
-	m_pFtFont->LoadSystemFont("arial.ttf", 32);
+	m_pFtFont->LoadFont("resources\\fonts\\PlayPretend.otf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
 
 	// Load some meshes in OBJ format
@@ -273,6 +273,15 @@ void Game::Render()
 		pMainProgram->SetUniform("light1.La", glm::vec3(1.25));		// Ambient colour of light
 		pMainProgram->SetUniform("light1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
 		pMainProgram->SetUniform("light1.Ls", glm::vec3(1.25f));		// Specular colour of light
+		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
+		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
+		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
+		pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+
+		pMainProgram->SetUniform("spotlight1.position", viewMatrix * glm::vec4(playerPos,1)); // Position of light source *in eye coordinates*
+		pMainProgram->SetUniform("spotlight1.La", glm::vec3(1.25));		// Ambient colour of light
+		pMainProgram->SetUniform("spotlight1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
+		pMainProgram->SetUniform("spotlight1.Ls", glm::vec3(1.25f));		// Specular colour of light
 		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
 		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
 		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
@@ -514,7 +523,6 @@ void Game::DisplayFrameRate()
 	// Increase the elapsed time and frame counter
 	m_elapsedTime += m_dt;
 	m_frameCount++;
-	int displayVel = m_velocity_y * 800;
 	// Now we want to subtract the current time by the last time that was stored
 	// to see if the time elapsed has been over a second, which means we found our FPS.
 	if (m_elapsedTime > 1000)
@@ -534,13 +542,13 @@ void Game::DisplayFrameRate()
 		fontProgram->SetUniform("matrices.projMatrix", m_pCamera->GetOrthographicProjectionMatrix());
 		fontProgram->SetUniform("vColour", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		
-		m_pFtFont->Render(20, height - 20, 20, "Speed: %d",displayVel);
-		m_pFtFont->Render(20, height - 50, 20, "LAPS: %d",highestLaps);
-		m_pFtFont->Render(20, height - 80, 20, "Current Lap: %g seconds", lapTime / 1000);
+		m_pFtFont->Render(20, height - 50, 30, "Speed: %.2f", m_velocity_y * 800);
+		m_pFtFont->Render(20, height - 100, 30, "LAPS: %d",highestLaps);
+		m_pFtFont->Render(20, height - 150, 30, "Current Lap: %.2f seconds", lapTime / 1000);
 		if(highestLaps!=0)
-		m_pFtFont->Render(20, height - 110, 20, "Fastest Lap: %f seconds",lowestLapTime/1000);
+		m_pFtFont->Render(20, height - 200, 30, "Fastest Lap: %.2f seconds",lowestLapTime/1000);
 		
-		m_pFtFont->Render(width-100, height - 50, 20, "FPS%d", m_framesPerSecond);
+		m_pFtFont->Render(width-200, height - 50, 30, "FPS: %d", m_framesPerSecond);
 	}
 }
 

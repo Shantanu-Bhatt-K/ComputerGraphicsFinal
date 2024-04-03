@@ -1,18 +1,17 @@
 ﻿  Game.cpp
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(31,22): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(385,29): warning C4018: '<': signed/unsigned mismatch
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(445,11): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(462,14): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(517,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(618,24): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(626,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(629,33): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(634,33): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(637,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(647,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(650,31): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(656,31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(659,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(663,23): warning C4305: '*=': truncation from 'double' to 'float'
-C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(669,23): warning C4305: '*=': truncation from 'double' to 'float'
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(394,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(454,11): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(471,14): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(626,24): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(634,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(637,33): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(642,33): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(645,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(655,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(658,31): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(664,31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(667,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(671,23): warning C4305: '*=': truncation from 'double' to 'float'
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(677,23): warning C4305: '*=': truncation from 'double' to 'float'
   OpenGLTemplate.vcxproj -> C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.exe
