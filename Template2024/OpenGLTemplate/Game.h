@@ -53,7 +53,7 @@ private:
 	int m_framesPerSecond;
 	bool m_appActive;
 	float timer = 0;
-
+	bool isDay = true;
 	//player variables
 	COpenAssetImportMesh* m_pCar;
 	float m_currentDist_y = 0.f, m_currentDist_x = 0.f;

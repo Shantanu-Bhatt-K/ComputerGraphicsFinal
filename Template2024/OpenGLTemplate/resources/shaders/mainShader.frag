@@ -20,7 +20,7 @@ void main()
 		float w = exp(-pow(rho*d,2))+pow(smoothstep(0,1000,worldPosition.y),1);
 	if (renderSkybox) {
 		
-		vOutputColour = texture(CubeMapTex, worldPosition);
+		vOutputColour = texture(CubeMapTex, worldPosition)*vec4(vColour, 1.0f);;
 		vOutputColour.rgb =mix(fogColour, vOutputColour.rgb,w);	
 
 	} else {

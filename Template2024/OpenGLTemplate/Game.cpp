@@ -266,15 +266,31 @@ void Game::Render()
 
 	
 	// Set light and materials in main shader program
-	glm::vec4 lightPosition1 = glm::vec4(0, 10, 0, 1); // Position of light source *in world coordinates*
-	pMainProgram->SetUniform("light1.position", viewMatrix*lightPosition1); // Position of light source *in eye coordinates*
-	pMainProgram->SetUniform("light1.La", glm::vec3(1.25));		// Ambient colour of light
-	pMainProgram->SetUniform("light1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
-	pMainProgram->SetUniform("light1.Ls", glm::vec3(1.25f));		// Specular colour of light
-	pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
-	pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
-	pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
-	pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+	if (isDay)
+	{
+		glm::vec4 lightPosition1 = glm::vec4(0, 10, 0, 1); // Position of light source *in world coordinates*
+		pMainProgram->SetUniform("light1.position", viewMatrix * lightPosition1); // Position of light source *in eye coordinates*
+		pMainProgram->SetUniform("light1.La", glm::vec3(1.25));		// Ambient colour of light
+		pMainProgram->SetUniform("light1.Ld", glm::vec3(1.25f));		// Diffuse colour of light
+		pMainProgram->SetUniform("light1.Ls", glm::vec3(1.25f));		// Specular colour of light
+		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
+		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
+		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
+		pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+	}
+	else
+	{
+		glm::vec4 lightPosition1 = glm::vec4(0, 10, 0, 1); // Position of light source *in world coordinates*
+		pMainProgram->SetUniform("light1.position", viewMatrix * lightPosition1); // Position of light source *in eye coordinates*
+		pMainProgram->SetUniform("light1.La", glm::vec3(0.2f,0.2f,0.5f));		// Ambient colour of light
+		pMainProgram->SetUniform("light1.Ld", glm::vec3(0.2f, 0.2f, 0.5f));		// Diffuse colour of light
+		pMainProgram->SetUniform("light1.Ls", glm::vec3(0.2f, 0.2f, 0.5f));		// Specular colour of light
+		pMainProgram->SetUniform("material1.Ma", glm::vec3(1.0f));	// Ambient material reflectance
+		pMainProgram->SetUniform("material1.Md", glm::vec3(0.3f));	// Diffuse material reflectance
+		pMainProgram->SetUniform("material1.Ms", glm::vec3(0.9f));	// Specular material reflectance
+		pMainProgram->SetUniform("material1.shininess", 15.0f);		// Shininess material property
+	}
+	
 		
 
 
@@ -315,7 +331,15 @@ void Game::Render()
 	// Render the player
 	modelViewMatrixStack.Push();
 		modelViewMatrixStack.Translate(playerPos);
-		modelViewMatrixStack.Rotate(up,-10*m_velocity_x);
+		if (m_velocity_y < 0)
+		{
+			modelViewMatrixStack.Rotate(up, 10 * m_velocity_x);
+		}
+		else
+		{
+			modelViewMatrixStack.Rotate(up, -10 * m_velocity_x);
+		}
+		
 		modelViewMatrixStack *= playerOrientation;
 		modelViewMatrixStack.Scale(0.8f);
 		pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
@@ -352,6 +376,8 @@ void Game::Render()
 	m_pCatmullRom->RenderTrack();
 	modelViewMatrixStack.Pop();
 	
+	//render the gems
+
 	modelViewMatrixStack.Push();
 	modelViewMatrixStack.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -361,6 +387,13 @@ void Game::Render()
 		pMainProgram->SetUniform("instanceLocs[" + std::to_string(i) + "]", activePositions[i]);
 #
 	}
+	if (!isDay)
+	{
+		pMainProgram->SetUniform("material1.Ma", glm::vec3(2.5f));	// Ambient material reflectance
+		pMainProgram->SetUniform("material1.Md", glm::vec3(2.5f));	// Diffuse material reflectance
+		pMainProgram->SetUniform("material1.Ms", glm::vec3(3.0f));
+	}
+	
 	pMainProgram->SetUniform("instancedCount", gemCount);
 	pMainProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pMainProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));
@@ -368,7 +401,9 @@ void Game::Render()
 	powerup->RenderInstanced(gemCount);
 	modelViewMatrixStack.Pop();
 	pMainProgram->SetUniform("isInstanced", false);
-
+	pMainProgram->SetUniform("material1.Ma", glm::vec3(0.5f));	// Ambient material reflectance
+	pMainProgram->SetUniform("material1.Md", glm::vec3(0.5f));	// Diffuse material reflectance
+	pMainProgram->SetUniform("material1.Ms", glm::vec3(1.0f));
 	CShaderProgram* pWaterProgram = (*m_pShaderPrograms)[2];
 	pWaterProgram->UseProgram();
 	pWaterProgram->SetUniform("bUseTexture", false);
@@ -431,6 +466,13 @@ void Game::Update()
 		if(GetKeyState(VK_UP) & 0x80 || GetKeyState('W') & 0x80) {
 			gameStarted = true;
 		}
+
+	if (GetKeyState(VK_RETURN) & 1)
+	{
+		isDay = true;
+	}
+	else
+		isDay = false;
 	UpdateCamera();
 	//m_pCamera->Update(m_dt);
 	Collisions();
@@ -563,6 +605,10 @@ void Game::Input()
 	{
 		cView = third;
 	}
+
+	//DayNight Input
+
+	
 }
 
 void Game::Physics()
@@ -603,6 +649,7 @@ void Game::Physics()
 	{
 		m_velocity_x -= 0.3f * m_dt * pow(m_velocity_x, 2);
 
+
 	}
 	else
 	{
@@ -631,13 +678,13 @@ void Game::UpdateCamera()
 	switch (cView)
 	{
 	case third:
-		m_pCamera->Set(curp + up * 10.f - (forward * (10.f + 40.f * m_velocity_y)), curp + forward * 10.f, up);
+		m_pCamera->Set(curp + up * 10.f - (forward * (10.f + 40.f * abs(m_velocity_y))), curp + forward * 10.f, up);
 		break;
 	case top:
-		m_pCamera->Set(curp + up * (10.f+40*m_velocity_y), curp, forward);
+		m_pCamera->Set(curp + up * (10.f+40*abs(m_velocity_y)), curp, forward);
 		break;
 	case side:
-		m_pCamera->Set(curp - normal * (20.f + 40.f * m_velocity_y) +up*10.f, curp, up);
+		m_pCamera->Set(curp - normal * (20.f + 40.f * abs(m_velocity_y)) +up*10.f, curp, up);
 	}
 
 	
