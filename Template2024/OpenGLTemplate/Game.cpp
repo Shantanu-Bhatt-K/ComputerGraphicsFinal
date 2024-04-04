@@ -195,7 +195,6 @@ void Game::Initialise()
 	
 	m_pBlimp->Load("resources\\models\\Blimp\\Blimp.obj");
 	//glEnable(GL_CULL_FACE);
-	
 	// Initialise audio and play background music
 	m_pAudio->Initialise();
 	m_pAudio->LoadEventSound("resources\\Audio\\Boing.wav");					// Royalty free sound from freesound.org
