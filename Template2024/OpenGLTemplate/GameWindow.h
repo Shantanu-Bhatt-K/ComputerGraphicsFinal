@@ -11,8 +11,8 @@ public:
 	GameWindow();
 
 	enum {
-		SCREEN_WIDTH = 1280,
-		SCREEN_HEIGHT = 720
+		SCREEN_WIDTH = 960,
+		SCREEN_HEIGHT = 540
 		
 	};
 

@@ -237,7 +237,6 @@ void Game::Render()
 	// Clear the buffers and enable depth testing (z-buffering)
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-
 	// Set up a matrix stack
 	glutil::MatrixStack modelViewMatrixStack;
 	modelViewMatrixStack.SetIdentity();
@@ -506,8 +505,8 @@ void Game::Update()
 	}
 	else
 		isDay = false;
-	UpdateCamera();
-	//m_pCamera->Update(m_dt);
+	//UpdateCamera();
+	m_pCamera->Update(m_dt);
 	Collisions();
 	totalLaps = m_pCatmullRom->CurrentLap(m_currentDist_y) + reverseLaps;
 	if (totalLaps > highestLaps)
@@ -564,6 +563,15 @@ void Game::DisplayFrameRate()
 		glDisable(GL_DEPTH_TEST);
 		fontProgram->SetUniform("matrices.modelViewMatrix", glm::mat4(1));
 		fontProgram->SetUniform("matrices.projMatrix", m_pCamera->GetOrthographicProjectionMatrix());
+		fontProgram->SetUniform("vColour", glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+		m_pFtFont->Render(24, height - 54, 30, "Speed: %.2f", m_velocity_y * 800);
+		m_pFtFont->Render(24, height - 104, 30, "LAPS: %d", highestLaps);
+		m_pFtFont->Render(24, height - 154, 30, "Current Lap: %.2f seconds", lapTime / 1000);
+		if (highestLaps != 0)
+			m_pFtFont->Render(24, height - 204, 30, "Fastest Lap: %.2f seconds", lowestLapTime / 1000);
+
+		m_pFtFont->Render(width - 196, height - 54, 30, "FPS: %d", m_framesPerSecond);
 		fontProgram->SetUniform("vColour", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		
 		m_pFtFont->Render(20, height - 50, 30, "Speed: %.2f", m_velocity_y * 800);
@@ -713,7 +721,7 @@ void Game::UpdateCamera()
 		m_pCamera->Set(curp + up * 10.f - (forward * (10.f + 40.f * abs(m_velocity_y))), curp + forward * 10.f, up);
 		break;
 	case top:
-		m_pCamera->Set(curp + up * (10.f+40*abs(m_velocity_y)), curp, forward);
+		m_pCamera->Set(curp + up * (20.f+40*abs(m_velocity_y)), curp, forward);
 		break;
 	case side:
 		m_pCamera->Set(curp - normal * (20.f + 40.f * abs(m_velocity_y)) +up*10.f, curp, up);

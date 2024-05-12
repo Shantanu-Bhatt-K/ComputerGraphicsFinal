@@ -92,11 +92,11 @@ void main()
 		
 		
 		if (bUseTexture)
-			vOutputColour = vTexColour*vec4(vColour, 1.0f);	// Combine object colour and texture 
+			vOutputColour = vTexColour*vec4(vColour, 1.0f);	
 		else
 		{
-		vOutputColour =vec4(vColour,1.0f)*texture(CubeMapTex,normalize(reflected))+vec4(smoothstep(460,480,p.y),smoothstep(460,470,p.y),smoothstep(460,470,p.y),1);// Just use the colour instead
-		vOutputColour.rgb = mix(fogColour, vOutputColour.rgb, w);
+			vOutputColour =vec4(vColour,1.0f)*texture(CubeMapTex,normalize(reflected))+vec4(smoothstep(460,480,p.y),smoothstep(460,470,p.y),smoothstep(460,470,p.y),1);// Just use the colour instead	
+			vOutputColour.rgb = mix(fogColour, vOutputColour.rgb, w);
 		}
 			
 			

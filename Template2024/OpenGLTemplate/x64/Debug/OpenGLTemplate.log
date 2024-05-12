@@ -1,4 +1,7 @@
-﻿  Game.cpp
+﻿  CatmullRom.cpp
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(611,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\CatmullRom.cpp(612,54): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Game.cpp
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(31,22): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(418,29): warning C4018: '<': signed/unsigned mismatch
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(478,11): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
@@ -14,4 +17,5 @@ C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTempl
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(691,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(695,23): warning C4305: '*=': truncation from 'double' to 'float'
 C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(701,23): warning C4305: '*=': truncation from 'double' to 'float'
+  Generating Code...
   OpenGLTemplate.vcxproj -> C:\Users\bhatt\Desktop\Coursework\ComputerGraphicsFinal\Template2024\x64\Debug\OpenGLTemplate.exe

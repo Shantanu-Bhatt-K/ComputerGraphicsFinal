@@ -78,8 +78,10 @@ vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm)
 	if (sDotN > 0.0f) 
 		specular = light1.Ls * material1.Ms * pow(max(dot(r, v), 0.0f), material1.shininess + eps);
 	
-
+	if(!renderSkybox)
 	return ambient + diffuse +specular ;
+	else
+	return ambient;
 
 }
 void main()

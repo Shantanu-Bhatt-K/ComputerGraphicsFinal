@@ -79,7 +79,7 @@ vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm)
 vec3 UpdatePosition(vec3 p)
 {
 	vec2 planeVec=vec2(p.x,p.z);
-	float seed =0;
+	float seed =p.x*0.17f+p.y*0.23f;
 	float tangent=0;
 	float binormal=0;
 	for(int i=0;i<40;i++)
