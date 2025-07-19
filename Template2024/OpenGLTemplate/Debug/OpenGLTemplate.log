@@ -1,0 +1,17 @@
+﻿  Game.cpp
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(31,22): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(418,29): warning C4018: '<': signed/unsigned mismatch
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(478,11): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(495,14): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(659,24): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(667,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(670,33): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(675,33): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(678,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(688,28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(691,31): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(697,31): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(700,34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(704,19): warning C4305: '*=': truncation from 'double' to 'float'
+C:\ComputerGraphicsFinal\Template2024\OpenGLTemplate\Game.cpp(710,19): warning C4305: '*=': truncation from 'double' to 'float'
+  OpenGLTemplate.vcxproj -> C:\ComputerGraphicsFinal\Template2024\Debug\OpenGLTemplate.exe

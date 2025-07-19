@@ -177,14 +177,14 @@ void Game::Initialise()
 	m_pSkybox->Create(2500.0f);
 	
 	// Create the planar terrain
-	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 200); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
+	m_pPlanarTerrain->Create("resources\\textures\\", "grassfloor01.jpg", 2000.0f, 2000.0f, 800); // Texture downloaded from http://www.psionicgames.com/?page_id=26 on 24 Jan 2013
 
 	m_pFtFont->LoadFont("resources\\fonts\\PlayPretend.otf", 32);
 	m_pFtFont->SetShaderProgram(pFontProgram);
 
 	// Load some meshes in OBJ format
 	//Create player body
-	m_pCar->Load("resources\\models\\Car\\Car.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
+	m_pCar->Load("resources\\models\\Car\\2019_05_02_car_low_poly_2_1.obj");  // Downloaded from http://www.psionicgames.com/?page_id=24 on 24 Jan 2013
 	m_startLine->Load("resources\\models\\StartPost\\StartLine.obj");  // Downloaded from http://opengameart.org/content/horse-lowpoly on 24 Jan 2013
 	
 	//CreatePowerUp
@@ -226,6 +226,7 @@ void Game::Initialise()
 	startLineTransform = glm::mat4(1.0f);
 	startLineTransform = glm::translate(_pos);
 	startLineTransform*= glm::mat4(glm::mat3(_forward, _up, _normal));
+	
 	glEnable(GL_MULTISAMPLE);
 	
 }
@@ -453,7 +454,7 @@ void Game::Render()
 	pWaterProgram->SetUniform("matrices.projMatrix", m_pCamera->GetPerspectiveProjectionMatrix());
 	// Render the planar terrain
 	modelViewMatrixStack.Push();
-	modelViewMatrixStack.Translate(glm::vec3(0.0f, -650.0f, 0.0f));
+	modelViewMatrixStack.Translate(glm::vec3(0.0f, -350.0f, 0.0f));
 	pWaterProgram->SetUniform("matrices.modelViewMatrix", modelViewMatrixStack.Top());
 	pWaterProgram->SetUniform("matrices.inverseViewMatrix", glm::inverse(m_pCamera->GetViewMatrix()));
 	pWaterProgram->SetUniform("matrices.normalMatrix", m_pCamera->ComputeNormalMatrix(modelViewMatrixStack.Top()));

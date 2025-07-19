@@ -79,7 +79,7 @@ vec3 PhongModel(vec4 eyePosition, vec3 eyeNorm)
 vec3 UpdatePosition(vec3 p)
 {
 	vec2 planeVec=vec2(p.x,p.z);
-	float seed =p.x*0.17f+p.y*0.23f;
+	float seed =p.x*0.17f+p.z*0.23f;
 	float tangent=0;
 	float binormal=0;
 	for(int i=0;i<40;i++)
@@ -87,9 +87,9 @@ vec3 UpdatePosition(vec3 p)
 		
 		vec2 randVec=vec2(cos(seed),sin(seed));
 		float angle=dot(planeVec,randVec)*0.05f*pow(1.3,i) + t*0.001f*pow(1.2,i);
-		 p.y+=12*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
-		 tangent+=12*randVec.x*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
-		 binormal+=12*randVec.y*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
+		 p.y+=4*pow(1.718,1*pow(0.65,i)*(sin(angle)-1));
+		 tangent+=2*randVec.x*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
+		 binormal+=2*randVec.y*0.07f*pow(1.2,i)*1*pow(0.65,i)*cos(angle)*pow(2.718,1*pow(0.65,i)*(sin(angle)-1));
 		  seed=random();
 	}
 	tangentVec=vec3(1,0,tangent);

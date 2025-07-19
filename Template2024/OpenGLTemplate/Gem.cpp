@@ -5,7 +5,7 @@
 
 #include "Gem.h"
 #include <math.h>
-
+#include <glm.hpp>
 CGem::CGem()
 {}
 
@@ -43,7 +43,7 @@ void CGem::CreateInterleaved(string a_sDirectory, string a_sFilename, int sides,
 	// first loop
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector=glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), 5*height/6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector=glm::vec3(radius * sin(2 * i * 3.1415f / sides), 5*height/6, radius * cos(2 * i * 3.1415f / sides));
 		upper_loop.push_back(tempVector);
 	}
 
@@ -51,17 +51,17 @@ void CGem::CreateInterleaved(string a_sDirectory, string a_sFilename, int sides,
 
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * 3.1415f / sides), height / 6, radius * cos(2 * i * 3.1415f / sides));
 		lower_loop.push_back(tempVector);
 	}
 
 	int vertexCount = 0;
 	std::vector<CVertex> vertices;
-	float perimeter = 2 * radius * sides * sin(glm::pi<float>() / sides);
+	float perimeter = 2 * radius * sides * sin(3.1415f / sides);
 	float side_length = 2 * height / 3;
 	float side_perimeter_ratio = side_length / perimeter;
 	float tex_side = side_perimeter_ratio;
-	float tex_radius = 1 / (2 * sides * sin(glm::pi<float>() / sides));
+	float tex_radius = 1 / (2 * sides * sin(3.1415f / sides));
 	glm::vec2 tex_center(tex_side + tex_radius, tex_side + tex_radius);
 	//top part
 	for (int i = 0; i < sides; i++)
@@ -78,8 +78,8 @@ void CGem::CreateInterleaved(string a_sDirectory, string a_sFilename, int sides,
 		v1.normal = n;
 		v2.normal = n;
 		v3.normal = n;
-		v1.texture_position= glm::vec2(tex_radius * sin(2 * i * glm::pi<float>() / sides), tex_radius * cos(2 * i * glm::pi<float>() / sides)) + tex_center;
-		v2.texture_position= glm::vec2(tex_radius * sin(2 * (i + 1) * glm::pi<float>() / sides), tex_radius * cos(2 * (i + 1) * glm::pi<float>() / sides)) + tex_center;
+		v1.texture_position= glm::vec2(tex_radius * sin(2 * i * 3.1415f / sides), tex_radius * cos(2 * i * 3.1415f / sides)) + tex_center;
+		v2.texture_position= glm::vec2(tex_radius * sin(2 * (i + 1) * 3.1415f / sides), tex_radius * cos(2 * (i + 1) * 3.1415f / sides)) + tex_center;
 		v3.texture_position= tex_center;
 		/*glm::vec2 t1 = glm::vec2(0.f, 5.f / 6.f);
 		glm::vec2 t2 = glm::vec2(1.f, 5.f / 6.f);
@@ -187,8 +187,8 @@ void CGem::CreateInterleaved(string a_sDirectory, string a_sFilename, int sides,
 		v2.normal = n;
 		v3.normal = n;
 
-		v1.texture_position = glm::vec2(tex_radius * sin(2 * i * glm::pi<float>() / sides), tex_radius * cos(2 * i * glm::pi<float>() / sides)) + tex_center;
-		v2.texture_position = glm::vec2(tex_radius * sin(2 * (i + 1) * glm::pi<float>() / sides), tex_radius * cos(2 * (i + 1) * glm::pi<float>() / sides)) + tex_center;
+		v1.texture_position = glm::vec2(tex_radius * sin(2 * i * 3.1415f / sides), tex_radius * cos(2 * i * 3.1415f / sides)) + tex_center;
+		v2.texture_position = glm::vec2(tex_radius * sin(2 * (i + 1) * 3.1415f / sides), tex_radius * cos(2 * (i + 1) * 3.1415f / sides)) + tex_center;
 		v3.texture_position = tex_center;
 		//vertex1
 		vertices.push_back(v2);
@@ -286,20 +286,20 @@ void CGem::CreateGrouped(string a_sDirectory, string a_sFilename, int sides, flo
 	// first loop
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), 2 * height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * 3.1415f / sides), 2 * height / 6, radius * cos(2 * i * 3.1415f / sides));
 		upper_loop.push_back(tempVector);
 	}
 
 	//second loop
-	float perimeter = 2 * radius * sides * sin(glm::pi<float>() / sides);
+	float perimeter = 2 * radius * sides * sin(3.1415f / sides);
 	float side_length = 2 * height / 3;
 	float side_perimeter_ratio = side_length / perimeter;
 	float tex_side = side_perimeter_ratio;
-	float tex_radius = 1 / (2 * sides * sin(glm::pi<float>() / sides));
+	float tex_radius = 1 / (2 * sides * sin(3.1415f / sides));
 	glm::vec2 tex_center(tex_side + tex_radius, tex_side + tex_radius);
 	for (int i = 0; i < sides; i++)
 	{
-		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * glm::pi<float>() / sides), -2*height / 6, radius * cos(2 * i * glm::pi<float>() / sides));
+		glm::vec3 tempVector = glm::vec3(radius * sin(2 * i * 3.1415f / sides), -2*height / 6, radius * cos(2 * i * 3.1415f / sides));
 		lower_loop.push_back(tempVector);
 	}
 	
@@ -317,8 +317,8 @@ void CGem::CreateGrouped(string a_sDirectory, string a_sFilename, int sides, flo
 		glm::vec3 v3 = top_point;
 		glm::vec3 n = glm::cross(v2 - v1, v3 - v2);
 		
-		glm::vec2 t1 = glm::vec2(tex_radius*sin(2 * i * glm::pi<float>() / sides), tex_radius * cos(2 * i * glm::pi<float>() / sides))+tex_center;
-		glm::vec2 t2 = glm::vec2(tex_radius * sin(2 * (i+1) * glm::pi<float>() / sides), tex_radius * cos(2 * (i + 1) * glm::pi<float>() / sides)) + tex_center;
+		glm::vec2 t1 = glm::vec2(tex_radius*sin(2 * i * 3.1415f / sides), tex_radius * cos(2 * i * 3.1415f / sides))+tex_center;
+		glm::vec2 t2 = glm::vec2(tex_radius * sin(2 * (i+1) * 3.1415f / sides), tex_radius * cos(2 * (i + 1) * 3.1415f / sides)) + tex_center;
 		glm::vec2 t3 = tex_center;
 
 		//vertex1
@@ -403,8 +403,8 @@ void CGem::CreateGrouped(string a_sDirectory, string a_sFilename, int sides, flo
 		glm::vec3 v3 = bottom_point;
 		glm::vec3 n = glm::cross(v1 - v2, v3 - v2);
 
-		glm::vec2 t1 = glm::vec2(tex_radius * sin(2 * i * glm::pi<float>() / sides), tex_radius * cos(2 * i * glm::pi<float>() / sides)) + tex_center;
-		glm::vec2 t2 = glm::vec2(tex_radius * sin(2 * (i + 1) * glm::pi<float>() / sides), tex_radius * cos(2 * (i + 1) * glm::pi<float>() / sides)) + tex_center;
+		glm::vec2 t1 = glm::vec2(tex_radius * sin(2 * i * 3.1415f / sides), tex_radius * cos(2 * i * 3.1415f / sides)) + tex_center;
+		glm::vec2 t2 = glm::vec2(tex_radius * sin(2 * (i + 1) * 3.1415f / sides), tex_radius * cos(2 * (i + 1) * 3.1415f / sides)) + tex_center;
 		glm::vec2 t3 = tex_center;
 
 		//vertex1
